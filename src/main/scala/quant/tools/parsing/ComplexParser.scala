@@ -10,38 +10,28 @@ import scala.util.parsing.combinator.JavaTokenParsers
 import scala.util.parsing.combinator.PackratParsers
 
 trait ComplexParser extends JavaTokenParsers with PackratParsers {
-  
-  def number: Parser[Double] = 
+
+  def number: Parser[Double] =
     floatingPointNumber ^^ (_.toDouble) |
     "[Pp][Ii]".r ^^ (_ => math.Pi)
-  
-  def doubleAsComplex = number ^^ (_.toComplex)
-  
+
   lazy val dexpr: PackratParser[Double] =
-    dexpr ~ ("*" ~> number) ^^ { case md ~ n => md * n } |
-    dexpr ~ ("/" ~> number) ^^ { case md ~ n => md / n } |
-    number
-  
-  def complex: Parser[Complex] = 
-    ("(" ~> number ~ ("," ~> number <~ ")")) ^^ { case re ~ im => Complex(re,im) }
-  
-  def doubleFuncCall: Parser[Double] =
-    "-" ~> doubleFuncCall ^^ (-_) |
-    (ident ~ ("(" ~> doubleFuncCall <~ ")")) ^^ {
-      case "sin" ~ n => math.sin(n)
-      case "cos" ~ n => math.cos(n)
-      case "sqrt" ~ n => math.sqrt(n)
-      case _ => ???
-    } |
+    "-" ~> dexpr ^^ (-_) |
+    dexpr ~ ("*" ~> dexpr) ^^ { case md ~ n => md * n } |
+    dexpr ~ ("/" ~> dexpr) ^^ { case md ~ n => md / n } |
     (ident ~ ("(" ~> dexpr <~ ")")) ^^ {
       case "sin" ~ n => math.sin(n)
       case "cos" ~ n => math.cos(n)
       case "sqrt" ~ n => math.sqrt(n)
       case _ => ???
-    }
-  
+    } |
+    number
+
+  def complex: Parser[Complex] =
+    ("(" ~> dexpr ~ ("," ~> dexpr <~ ")")) ^^ { case re ~ im => Complex(re,im) }
+
   def row =
-    (doubleAsComplex | complex | (doubleFuncCall ^^ (_.toComplex))).* ^^ (_.toArray)
+    (dexpr ^^ (_.toComplex) | complex).* ^^ (_.toArray)
 
   def parseMatrix(ss: List[String]) =
     (for (l <- ss) yield parse(row, new PackratReader(new CharSequenceReader(l))) match {
@@ -52,6 +42,6 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
       case (Right(row), Left(msg)) => Left(msg)
       case (Right(row), Right(m))  => Right(row :: m)
     } map (_.toArray)
-    
-  
+
+
 }
