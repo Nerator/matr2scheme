@@ -1,0 +1,2 @@
+sqrt(0.5) sqrt(0.5)
+sqrt(0.5) -sqrt(0.5)
