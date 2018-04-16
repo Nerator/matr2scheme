@@ -41,6 +41,9 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
       case (Left(msg), _)          => Left(msg)
       case (Right(row), Left(msg)) => Left(msg)
       case (Right(row), Right(m))  => Right(row :: m)
-    } map (_.toArray)
+    } match {
+      case Left(msg) => Left(msg)
+      case Right(m) => Right(m.toArray)
+    }
 
 }
