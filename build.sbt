@@ -4,7 +4,7 @@ lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
       organization := "ru.dovzhikov",
-      scalaVersion := "2.12.5",
+      crossScalaVersions := Seq("2.11.12", "2.12.5"),
       version      := "0.2.0"
     )),
     name := "quant",

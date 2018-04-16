@@ -43,5 +43,4 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
       case (Right(row), Right(m))  => Right(row :: m)
     } map (_.toArray)
 
-
 }
