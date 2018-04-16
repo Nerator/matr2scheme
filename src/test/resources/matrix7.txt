@@ -1,0 +1,1 @@
+(cos(cos(1 * pi * sin(2 / 3))), sin(0))
