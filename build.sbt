@@ -5,7 +5,7 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization := "ru.dovzhikov",
       crossScalaVersions := Seq("2.11.12", "2.12.5"),
-      version      := "0.2.0"
+      version      := "0.2.1"
     )),
     name := "matr2scheme",
     libraryDependencies ++= Seq(
