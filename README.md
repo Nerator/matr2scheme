@@ -27,4 +27,4 @@ Running:
 scala matr2scheme_<version> <filename>
 ```
 
-`file` should be text file with unitary matrix (no check for this yet). Complex numbers enteren like `(Re,Im)`.
+`file` should be text file with unitary matrix (no check for this yet). Complex numbers entered like `(Re,Im)`.
