@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).
       crossScalaVersions := Seq("2.11.12", "2.12.5"),
       version      := "0.2.0"
     )),
-    name := "quant",
+    name := "matr2scheme",
     libraryDependencies ++= Seq(
       scalaTest % Test,
       parserComb
