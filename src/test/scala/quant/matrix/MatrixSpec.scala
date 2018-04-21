@@ -107,5 +107,32 @@ class MatrixSpec extends FlatSpec with Matchers {
       Array(Complex.zero, Complex.zero, Complex.zero,  Complex.one))
     cm1.hermTrans shouldEqual cm1
   }
+  
+  it should "check if it's square matrix correctly" in {
+    im.isSquare shouldBe true
+    dm.isSquare shouldBe true
+    cm.isSquare shouldBe true
+    Array(
+        Array(1, 2, 3),
+        Array(4, 5, 6)
+    ).isSquare shouldBe false
+    Array(
+        Array(1, 2, 3),
+        Array(4, 5),
+        Array(6),
+    ).isSquare shouldBe false
+  }
+  
+  it should "check if it's unitary matrix correctly" in {
+    im.isUnitary shouldBe false
+    dm.isUnitary shouldBe false
+    cm.isUnitary shouldBe false
+    Array(
+        Array(1, 0, 0, 0),
+        Array(0, 1, 0, 0),
+        Array(0, 0, 0, 1),
+        Array(0, 0, 1, 0)
+    ).isUnitary shouldBe true
+  }
 
 }

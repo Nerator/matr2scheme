@@ -12,18 +12,27 @@ import java.io.File
 object Runner extends App with ComplexParser {
 
   def runAlg(m: Matrix[Complex]): Unit = {
-    // Выведем её на экран
-    println(s"Исходная матрица:\n${m.prettyToString}")
+    // Checks
+    if (!m.isSquare) {
+      println(s"Error: non-square matrix.")
+      sys.exit
+    } else if (!m.isUnitary) {
+      println(s"Error: non-unitary matrix.")
+      sys.exit
+    } else {
+      // Выведем её на экран
+      println(s"Исходная матрица:\n${m.prettyToString}")
 
-    // Запустим алгоритм
-    val res = Razl.alg(m)
+      // Запустим алгоритм
+      val res = Razl.alg(m)
 
-    // Красиво выведем результат
-    println("Результат:")
-    res.zipWithIndex foreach {
-      case (m, i) =>
-        println(s"Матрица №${i+1}")
-        println(m.prettyToString)
+      // Красиво выведем результат
+      println("Результат:")
+      res.zipWithIndex foreach {
+        case (m, i) =>
+          println(s"Матрица №${i + 1}")
+          println(m.prettyToString)
+      }
     }
   }
 
@@ -56,7 +65,8 @@ object Runner extends App with ComplexParser {
 
     matrixOrError.fold(
       msg => println(s"Parsing error: $msg"),
-      m => runAlg(m))
+      m => runAlg(m)
+    )
   }
 
 }
