@@ -119,7 +119,7 @@ class MatrixSpec extends FlatSpec with Matchers {
     Array(
         Array(1, 2, 3),
         Array(4, 5),
-        Array(6),
+        Array(6)
     ).isSquare shouldBe false
   }
   
