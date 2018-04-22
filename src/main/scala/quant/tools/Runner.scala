@@ -12,6 +12,9 @@ import java.io.File
 object Runner extends App with ComplexParser {
 
   def runAlg(m: Matrix[Complex]): Unit = {
+    // Выведем её на экран
+    println(s"Исходная матрица:\n${m.prettyToString}")
+
     // Checks
     if (!m.isSquare) {
       println(s"Error: non-square matrix.")
@@ -20,9 +23,6 @@ object Runner extends App with ComplexParser {
       println(s"Error: non-unitary matrix.")
       sys.exit
     } else {
-      // Выведем её на экран
-      println(s"Исходная матрица:\n${m.prettyToString}")
-
       // Запустим алгоритм
       val res = Razl.alg(m)
 
@@ -50,7 +50,7 @@ object Runner extends App with ComplexParser {
     println("  - элементы матрицы в строке отделяются запятыми")
     println("  - каждая строка матрицы находится на отдельной строке файла")
   }
-  
+
   println("Программа для разложения унитарной матрицы на произведение двухуровневых матриц.")
   println("Автор: Довжиков Сергей")
   println()
