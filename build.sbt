@@ -4,7 +4,7 @@ lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
       organization := "ru.dovzhikov",
-      crossScalaVersions := Seq("2.11.12", "2.12.5"),
+      crossScalaVersions := Seq("2.11.12", "2.12.6"),
       version      := "0.2.1"
     )),
     name := "matr2scheme",
