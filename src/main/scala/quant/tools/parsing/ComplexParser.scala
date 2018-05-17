@@ -28,10 +28,11 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
     number
 
   def complex: Parser[Complex] =
-    ("(" ~> dexpr ~ ("," ~> dexpr <~ ")")) ^^ { case re ~ im => Complex(re,im) }
+    ("(" ~> dexpr ~ ("," ~> dexpr <~ ")")) ^^ { case re ~ im => Complex(re,im) } |
+    dexpr ^^ (_.toComplex)
 
   def row =
-    (dexpr ^^ (_.toComplex) | complex).* ^^ (_.toArray)
+    complex.* ^^ (_.toArray)
 
   def parseMatrix(ss: List[String]) =
     (for (l <- ss) yield parse(row, new PackratReader(new CharSequenceReader(l))) match {
