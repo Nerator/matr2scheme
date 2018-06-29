@@ -8,9 +8,9 @@ Implementation of the algorithm for decomposition of arbitrary unitaty matrix in
 
 ## Building
 
-For Scala 2.12.5:
+For Scala 2.12.6:
 ``` shell
-sbt ++2.12.5 package
+sbt ++2.12.6 package
 ```
 
 For Scala 2.11.12:
@@ -18,7 +18,12 @@ For Scala 2.11.12:
 sbt ++2.11.12 package
 ```
 
-Resulting JAR-files will be located at `target/scala2.12` or `target/scala2.11` respectively.
+For Scala 2.10.7:
+``` shell
+sbt ++2.10.7 package
+```
+
+Resulting JAR-files will be located at `target/scala2.12`, `target/scala2.11` or `target/scala2.10` respectively.
 
 ## Usage
 
@@ -27,4 +32,4 @@ Running:
 scala matr2scheme_<version> <filename>
 ```
 
-`file` should be text file with unitary matrix (no check for this yet). Complex numbers entered like `(Re,Im)`.
+`file` should be text file with unitary matrix. Complex numbers entered like `(Re,Im)`.
