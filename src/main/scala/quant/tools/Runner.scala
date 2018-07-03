@@ -1,19 +1,20 @@
 package quant.tools
 
 import quant.algs.Razl
-import quant.complex.Complex
-import quant.matrix._
 import quant.implicits._
 import quant.tools.parsing.ComplexParser
+
+import breeze.linalg.DenseMatrix
+import breeze.math.Complex
 
 import scala.io.Source
 import java.io.File
 
 object Runner extends App with ComplexParser {
 
-  def runAlg(m: Matrix[Complex]): Unit = {
+  def runAlg(m: DenseMatrix[Complex]): Unit = {
     // Выведем её на экран
-    println(s"Исходная матрица:\n${m.prettyToString}")
+    println(s"Исходная матрица:\n${m.toString}")
 
     // Checks
     if (!m.isSquare) {
@@ -31,7 +32,7 @@ object Runner extends App with ComplexParser {
       res.zipWithIndex foreach {
         case (m, i) =>
           println(s"Матрица №${i + 1}")
-          println(m.prettyToString)
+          println(m.toString)
       }
     }
   }

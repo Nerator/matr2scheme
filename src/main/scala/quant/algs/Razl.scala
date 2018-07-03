@@ -1,56 +1,59 @@
 package quant.algs
 
-import quant.complex.Complex
+import breeze.numerics._
+import breeze.math._
+import breeze.linalg._
+
 import quant.implicits._
-import quant.matrix._
+
 import java.io.File
 import java.io.PrintWriter
 
 object Razl {
-  
-  def findNonzero(m: Matrix[Complex]): (Int, Int) = {    
-    for (j <- 0 until m.length) {
-      if (j != m.length-1 && (m(j)(j) ~= -Complex.one)) {
+
+  def findNonzero(m: DenseMatrix[Complex]): (Int, Int) = {    
+    for (j <- 0 until m.rows) {
+      if (j != m.rows-1 && (isClose(m(j,j), -Complex.one))) {
         return (j+1,j)
       }
-      if (m(j)(j) !~= Complex.one) {
-        for (i <- j + 1 until m(j).length) {
-          if (m(i)(j) !~= Complex.zero) {
+      if (!isClose(m(j,j), Complex.one)) {
+        for (i <- j + 1 until m.cols) {
+          if (!isClose(m(i,j), Complex.zero)) {
             return (i, j)
           }
         }
       }
     }
-    (m.length-1,m.length-2)
+    (m.rows-1,m.rows-2)
   }
 
-  private def findU(m: Matrix[Complex], i: Int, j: Int): Matrix[Complex] = {
-    require(j < i, s"j = $j, i = $i\n${m.prettyToString}")
-    val res = Matrix.eye[Complex](m.length)
-    
-    if (i == m.length-1 && j == m.length-2) {
-      res(j)(j) = m(j)(j).conj
-      res(j)(i) = m(i)(j).conj
-      res(i)(j) = m(j)(i).conj
-      res(i)(i) = m(i)(i).conj
+  private def findU(m: DenseMatrix[Complex], i: Int, j: Int): DenseMatrix[Complex] = {
+    require(j < i, s"j = $j, i = $i\n${m.toString}")
+    val res = DenseMatrix.eye[Complex](m.rows)
+
+    if (i == m.rows-1 && j == m.rows-2) {
+      res(j,j) = m(j,j).conjugate
+      res(j,i) = m(i,j).conjugate
+      res(i,j) = m(j,i).conjugate
+      res(i,i) = m(i,i).conjugate
     } else {
-      val n = math.sqrt(math.pow(m(j)(j).abs, 2.0) + math.pow(m(i)(j).abs, 2.0)).toComplex
-      res(j)(j) = m(j)(j).conj / n
-      res(j)(i) = m(i)(j).conj / n
-      res(i)(j) = m(i)(j) / n
-      res(i)(i) = -m(j)(j) / n
+      val n = convert(math.sqrt(math.pow(m(j,j).abs, 2.0) + math.pow(m(i,j).abs, 2.0)), Complex)
+      res(j,j) = m(j,j).conjugate / n
+      res(j,i) = m(i,j).conjugate / n
+      res(i,j) = m(i,j) / n
+      res(i,i) = -m(j,j) / n
     }
     res
   }
 
-  def alg(m: Matrix[Complex]): List[Matrix[Complex]] = {
-    if (m ~= Matrix.eye(m.length))
+  def alg(m: DenseMatrix[Complex]): List[DenseMatrix[Complex]] = {
+    if (all(isClose(m, DenseMatrix.eye[Complex](m.rows))))
       Nil
     else {
       val (i,j) = findNonzero(m)
       val u = findU(m, i, j)
       val newM = u * m
-      u.hermTrans :: alg(newM)
+      u.t :: alg(newM)
     }
   }
 

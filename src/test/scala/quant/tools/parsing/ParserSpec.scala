@@ -2,13 +2,14 @@ package quant.tools.parsing
 
 import org.scalatest._
 
+import breeze.math.Complex
+import breeze.linalg.DenseMatrix
+
 import quant.implicits._
-import quant.complex.Complex
 
 import scala.io.Source
-import java.io.File
 import scala.util.parsing.input.CharSequenceReader
-import math._
+import scala.math._
 
 class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
 
@@ -28,11 +29,12 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(1, 0, 0, 0),
           Array(0, 1, 0, 0),
           Array(0, 0, 0, 1),
-          Array(0, 0, 1, 0))
+          Array(0, 0, 1, 0)
+        )
     }
   }
 
@@ -41,11 +43,12 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(Complex.zero,   -Complex.i, Complex.zero, Complex.zero),
           Array(   Complex.i, Complex.zero, Complex.zero, Complex.zero),
           Array(Complex.zero, Complex.zero, Complex.zero,    Complex.i),
-          Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero))
+          Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero)
+        )
     }
   }
 
@@ -54,11 +57,12 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(Complex.zero,   -Complex.i, Complex.zero, Complex.zero),
           Array(   Complex.i, Complex.zero, Complex.zero, Complex.zero),
           Array(Complex.zero, Complex.zero, Complex.zero,    Complex.i),
-          Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero))
+          Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero)
+        )
     }
   }
 
@@ -67,9 +71,10 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(sqrt(1.0/2.0),  sqrt(1.0/2.0)),
-          Array(sqrt(1.0/2.0), -sqrt(1.0/2.0)))
+          Array(sqrt(1.0/2.0), -sqrt(1.0/2.0))
+        )
     }
   }
 
@@ -78,9 +83,10 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(sqrt(1.0/2.0),  sqrt(1.0/2.0)),
-          Array(sqrt(1.0/2.0), -sqrt(1.0/2.0)))
+          Array(sqrt(1.0/2.0), -sqrt(1.0/2.0))
+        )
     }
   }
 
@@ -89,19 +95,20 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(cos(3*Pi/4), sin(3*Pi/4)),
-          Array(sin(3*Pi/4), cos(3*Pi/4)))
+          Array(sin(3*Pi/4), cos(3*Pi/4))
+        )
     }
     val file1 = Source.fromURL(getClass.getResource("/matrix8.txt"))
     parseMatrix(file1.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
-          Array(Complex.zero,  Complex.zero,          Complex.zero,         Complex.one ),
-          Array(Complex.zero,  cos(Pi/12).toComplex, -Complex.i*sin(Pi/12), Complex.zero),
-          Array(Complex.zero, -Complex.i*sin(Pi/12),  cos(Pi/12).toComplex, Complex.zero),
-          Array(Complex.one,   Complex.zero,          Complex.zero,         Complex.zero)
+        m shouldEqual DenseMatrix(
+          Array(Complex.zero,            Complex.zero,           Complex.zero,  Complex.one),
+          Array(Complex.zero,  Complex(cos(Pi/12), 0),  -Complex.i*sin(Pi/12), Complex.zero),
+          Array(Complex.zero,   -Complex.i*sin(Pi/12), Complex(cos(Pi/12), 0), Complex.zero),
+          Array(Complex.one,             Complex.zero,           Complex.zero, Complex.zero)
         )
     }
   }
@@ -111,9 +118,10 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(-Complex.one, -Complex.one),
-          Array(-Complex.one, -Complex.one))
+          Array(-Complex.one, -Complex.one)
+        )
     }
   }
 
@@ -122,7 +130,7 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     parseMatrix(file.getLines.toList) match {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
-        m shouldEqual Array(
+        m shouldEqual DenseMatrix(
           Array(Complex(cos(cos(Pi * sin(2.0 / 3.0))),0))
         )
     }

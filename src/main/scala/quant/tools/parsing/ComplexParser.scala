@@ -1,7 +1,10 @@
 package quant.tools.parsing
 
 import quant.implicits._
-import quant.complex.Complex
+
+import breeze.math.Complex
+import breeze.linalg.{DenseMatrix, convert}
+
 import scala.util.parsing.combinator.RegexParsers
 import scala.util.parsing.input.CharSequenceReader
 import scala.util.parsing.input.Reader
@@ -29,7 +32,7 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
 
   def complex: Parser[Complex] =
     ("(" ~> dexpr ~ ("," ~> dexpr <~ ")")) ^^ { case re ~ im => Complex(re,im) } |
-    dexpr ^^ (_.toComplex)
+    dexpr ^^ (convert(_, Complex))
 
   def row =
     complex.* ^^ (_.toArray)
@@ -44,7 +47,7 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
       case (Right(row), Right(m))  => Right(row :: m)
     } match {
       case Left(msg) => Left(msg)
-      case Right(m) => Right(m.toArray)
+      case Right(m) => Right(DenseMatrix(m: _*))
     }
 
 }

@@ -1,21 +1,13 @@
 package quant.implicits
 
-import quant.complex.Complex
-import quant.matrix._
+import breeze.linalg.DenseMatrix
+import breeze.math.Complex
 
-trait MatrixImplicits {
+trait DenseMatrixImplicits {
 
-  implicit class DoubleWithMatrMult(x: Double) {
-    def *(that: Matrix[Double]) = that * x
-    //def *(that: Matrix[Complex]) = that * x
-  }
-
-  implicit class ComplexWithMatrMult(x: Complex) {
-    def *(that: Matrix[Complex]) = that * x
-  }
-
-  implicit class IntWithMatrMult(x: Int) {
-    def *(that: Matrix[Int]) = that * x
+  implicit class RichDenseMatrix(x: DenseMatrix[Complex]) {
+    def isUnitary = (x * x.t) == DenseMatrix.eye[Complex](x.rows)
+    def isSquare = x.rows == x.cols
   }
 
 }

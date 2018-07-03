@@ -5,15 +5,23 @@ lazy val root = (project in file(".")).
     inThisBuild(List(
       organization       := "ru.dovzhikov",
       crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.6"),
-      version            := "0.2.1"
+      version            := "0.3.0",
+      scalacOptions      ++= Seq("-unchecked", "-deprecation")
     )),
     name := "matr2scheme",
-    libraryDependencies += scalaTest % Test,
+    libraryDependencies ++= Seq(
+      scalaTest % Test,
+      breeze
+    ),
     libraryDependencies ++= (scalaBinaryVersion.value match {
       case "2.10" => Seq()
       case _      => Seq(parserComb)
-    })
+    }),
+    initialCommands in console := 
+"""
+import breeze.numerics._
+import breeze.math._
+import breeze.linalg._
+import quant.implicits._
+"""
   )
-
-// set the prompt (for this build) to include the project id.
-// shellPrompt in ThisBuild := { state => name.value + "> " }
