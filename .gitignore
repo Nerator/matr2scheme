@@ -23,3 +23,8 @@ project/project/
 .cache-tests
 .target/
 bin/
+
+# IntellijIdea files
+*.iml
+.idea
+out
