@@ -28,3 +28,5 @@ bin/
 *.iml
 .idea
 out
+
+/package
