@@ -12,12 +12,9 @@ class RazlSpec extends FlatSpec with Matchers {
 
   // Переопределение равенства комплексных матриц для ScalaTest - с
   // использованием приближенного равенства
-  implicit val meq: Equality[DenseMatrix[Complex]] = new Equality[DenseMatrix[Complex]] {
-    def areEqual(a: DenseMatrix[Complex], b: Any) =
-      b match {
-        case m: DenseMatrix[Complex] => breeze.linalg.all(isClose(a, m))
-        case _ => false
-      }
+  implicit val meq: Equality[DenseMatrix[Complex]] = (a: DenseMatrix[Complex], b: Any) => b match {
+    case m: DenseMatrix[_] => breeze.linalg.all(isClose(a, m.asInstanceOf[DenseMatrix[Complex]]))
+    case _ => false
   }
 
   // Раздел 2 задание 1
