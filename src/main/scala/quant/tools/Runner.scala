@@ -3,7 +3,6 @@ package quant.tools
 import quant.algs.Razl
 import quant.implicits._
 import quant.tools.parsing.ComplexParser
-
 import breeze.linalg.DenseMatrix
 import breeze.math.Complex
 
@@ -14,7 +13,7 @@ object Runner extends App with ComplexParser {
 
   def runAlg(m: DenseMatrix[Complex]): Unit = {
     // Выведем её на экран
-    println(s"Исходная матрица:\n${m.toString}")
+    println(s"Исходная матрица:\n${m.toString(Int.MaxValue, Int.MaxValue)}")
 
     // Checks
     if (!m.isSquare) {
@@ -32,7 +31,7 @@ object Runner extends App with ComplexParser {
       res.zipWithIndex foreach {
         case (m, i) =>
           println(s"Матрица №${i + 1}")
-          println(m.toString)
+          println(m.toString(Int.MaxValue, Int.MaxValue))
       }
     }
   }
