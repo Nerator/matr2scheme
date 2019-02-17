@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
       organization       := "ru.dovzhikov",
-      crossScalaVersions := Seq("2.11.12", "2.12.6"),
+      crossScalaVersions := Seq("2.11.12", "2.12.8"),
       version            := "0.3.1",
       scalacOptions      ++= Seq("-unchecked", "-deprecation")
     )),
