@@ -3,7 +3,7 @@ package quant.tools
 import quant.algs.Razl
 import quant.implicits._
 import quant.tools.parsing.ComplexParser
-import breeze.linalg.DenseMatrix
+import breeze.linalg.{DenseMatrix, all, isClose}
 import breeze.math.Complex
 
 import scala.io.Source
@@ -33,11 +33,23 @@ object Runner extends App with ComplexParser {
           println(s"Матрица №${i + 1}")
           println(m.toString(Int.MaxValue, Int.MaxValue))
       }
+
+      println("Проверка равенства произведения матриц исходной:")
+      val check = res.reduce(_ * _)
+      if (all(isClose(check, m)))
+        println("Произведение матриц равно исходной.")
+      else {
+        println("Произведение матриц НЕ РАВНО исходной!")
+        println("Произведение:")
+        println(check.toString(Int.MaxValue, Int.MaxValue))
+      }
     }
   }
 
   def printUsage: Unit = {
-    println("Использование: scala ???.jar <имя файла>.")
+    println("Использование: ./matr2scheme <имя файла>")
+    println("./matr2scheme <имя файла>     (*nix)")
+    println("matr2scheme.bat <имя файла>   (windows)")
     println("Файл должен содержать матрицу комплексных чисел по следующим правилам:")
     println("  - можно вводить целые и вещественные числа (включая число Пи)")
     println("  - комплексные числа вводятся в виде пар (re,im), где re - вещественная часть, im - мнимая")
