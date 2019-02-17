@@ -232,6 +232,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m01
   }
 
   it should "work correctly for m02" in {
@@ -258,6 +259,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m02
   }
 
   it should "work correctly for m03" in {
@@ -284,6 +286,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m03
   }
 
   it should "work correctly for m04" in {
@@ -310,6 +313,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m04
   }
 
   it should "work correctly for m05" in {
@@ -336,6 +340,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m05
   }
 
   it should "work correctly for m06" in {
@@ -362,6 +367,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m06
   }
 
   it should "work correctly for m07" in {
@@ -382,6 +388,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m07
   }
 
   it should "work correctly for m08" in {
@@ -402,6 +409,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m08
   }
 
   it should "work correctly for m09" in {
@@ -422,6 +430,7 @@ class RazlSpec extends FlatSpec with Matchers {
         )
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m09
   }
 
   it should "work correctly for m10" in {
@@ -442,6 +451,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m10
   }
 
   it should "work correctly for m11" in {
@@ -462,6 +472,7 @@ class RazlSpec extends FlatSpec with Matchers {
         )
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m11
   }
 
   it should "work correctly for m12" in {
@@ -506,6 +517,7 @@ class RazlSpec extends FlatSpec with Matchers {
         )
       case _ => fail("Didn't get 6 matrices.")
     }
+    r reduce (_ * _) shouldEqual m12
   }
 
   it should "work correctly for m13" in {
@@ -515,6 +527,7 @@ class RazlSpec extends FlatSpec with Matchers {
         m1 shouldEqual m13
       case _ => fail("Didn't get 1 matrix.")
     }
+    r reduce (_ * _) shouldEqual m13
   }
 
   it should "work correctly for m14" in {
@@ -535,6 +548,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m14
   }
 
   it should "work correctly for m15" in {
@@ -555,6 +569,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m15
   }
 
   it should "work correctly for m16" in {
@@ -623,6 +638,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 6 matrices.")
     }
+    r reduce (_ * _) shouldEqual m16
   }
 
   it should "work correctly for m17" in {
@@ -691,6 +707,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 6 matrices.")
     }
+    r reduce (_ * _) shouldEqual m17
   }
 
   it should "work correctly for m18" in {
@@ -711,6 +728,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 2 matrices.")
     }
+    r reduce (_ * _) shouldEqual m18
   }
 
   it should "work correctly for m19" in {
@@ -738,6 +756,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 3 matrices.")
     }
+    r reduce (_ * _) shouldEqual m19
   }
 
   it should "work correctly for m20" in {
@@ -771,6 +790,7 @@ class RazlSpec extends FlatSpec with Matchers {
         ), Complex)
       case _ => fail("Didn't get 4 matrices.")
     }
+    r reduce (_ * _) shouldEqual m20
   }
 
 }
