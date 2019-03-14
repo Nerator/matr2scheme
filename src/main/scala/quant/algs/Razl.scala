@@ -1,13 +1,9 @@
 package quant.algs
 
-import breeze.numerics._
-import breeze.math._
-import breeze.linalg._
+import breeze.linalg.{DenseMatrix, all, convert, isClose}
+import breeze.math.Complex
 
 import quant.implicits._
-
-import java.io.File
-import java.io.PrintWriter
 
 object Razl {
 
