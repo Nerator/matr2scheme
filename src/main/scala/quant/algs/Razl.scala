@@ -43,7 +43,7 @@ object Razl {
   }
 
   def alg(m: DenseMatrix[Complex]): List[DenseMatrix[Complex]] = {
-    if (all(isClose(m, DenseMatrix.eye[Complex](m.rows))))
+    if (m.isClose(DenseMatrix.eye[Complex](m.rows)))
       Nil
     else {
       val (i,j) = findNonzero(m)

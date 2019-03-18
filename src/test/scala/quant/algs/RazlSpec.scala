@@ -6,17 +6,13 @@ import org.scalatest._
 import org.scalactic.Equality
 
 import breeze.math.Complex
-import breeze.linalg.{DenseMatrix, isClose, convert}
+import breeze.linalg.{DenseMatrix, convert}
 
 class RazlSpec extends FlatSpec with Matchers {
 
   // Переопределение равенства комплексных матриц для ScalaTest - с
   // использованием приближенного равенства
-  implicit val meq: Equality[DenseMatrix[Complex]] = (a, b) =>
-    b match {
-      case m: DenseMatrix[_] => breeze.linalg.all(isClose(a, m.asInstanceOf[DenseMatrix[Complex]]))
-      case _ => false
-    }
+  implicit val meq: Equality[DenseMatrix[Complex]] = (a, b) => a isClose b
 
   // Раздел 2 задание 1
 
