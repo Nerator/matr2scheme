@@ -15,19 +15,19 @@ trait DenseMatrixImplicits {
             x.size == 0
           else m.data.head match {
             case _: Int =>
-              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Int]], Complex)).toDenseVector)
+              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Int]], Complex)))
             case _: Double =>
-              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Double]], Complex)).toDenseVector)
+              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Double]], Complex)))
             case _: Float =>
-              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Float]], Complex)).toDenseVector)
+              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Float]], Complex)))
             case _: Long =>
-              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Long]], Complex)).toDenseVector)
+              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Long]], Complex)))
             case _: Char =>
-              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Char]], Complex)).toDenseVector)
+              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Char]], Complex)))
             case _: Short =>
-              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Short]], Complex)).toDenseVector)
+              all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Short]], Complex)))
             case _: Complex =>
-              all(breeze.linalg.isClose(x, m.asInstanceOf[DenseMatrix[Complex]]).toDenseVector)
+              all(breeze.linalg.isClose(x, m.asInstanceOf[DenseMatrix[Complex]]))
             case _ => false
           }
         case _ => false
