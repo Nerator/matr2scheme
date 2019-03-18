@@ -1,16 +1,10 @@
 package quant.tools.parsing
 
-import quant.implicits._
-
-import breeze.math.Complex
 import breeze.linalg.{DenseMatrix, convert}
+import breeze.math.Complex
 
-import scala.util.parsing.combinator.RegexParsers
+import scala.util.parsing.combinator.{JavaTokenParsers, PackratParsers}
 import scala.util.parsing.input.CharSequenceReader
-import scala.util.parsing.input.Reader
-import scala.util.parsing.combinator.lexical.Scanners
-import scala.util.parsing.combinator.JavaTokenParsers
-import scala.util.parsing.combinator.PackratParsers
 
 trait ComplexParser extends JavaTokenParsers with PackratParsers {
 
@@ -34,16 +28,16 @@ trait ComplexParser extends JavaTokenParsers with PackratParsers {
     ("(" ~> dexpr ~ ("," ~> dexpr <~ ")")) ^^ { case re ~ im => Complex(re,im) } |
     dexpr ^^ (convert(_, Complex))
 
-  def row =
+  def row: Parser[Array[Complex]] =
     complex.* ^^ (_.toArray)
 
-  def parseMatrix(ss: List[String]) =
+  def parseMatrix(ss: List[String]): Either[String, DenseMatrix[Complex]] =
     (for (l <- ss) yield parse(row, new PackratReader(new CharSequenceReader(l))) match {
       case Success(res, _)      => Right(res)
       case NoSuccess(msg, next) => Left(s"$msg next: ${next.pos}")
     }).foldRight[Either[String, List[Array[Complex]]]](Right(Nil)) {
       case (Left(msg), _)          => Left(msg)
-      case (Right(row), Left(msg)) => Left(msg)
+      case (Right(_), Left(msg)) => Left(msg)
       case (Right(row), Right(m))  => Right(row :: m)
     } match {
       case Left(msg) => Left(msg)

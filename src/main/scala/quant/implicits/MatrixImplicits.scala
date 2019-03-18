@@ -13,6 +13,8 @@ trait DenseMatrixImplicits {
         case m: DenseMatrix[_] =>
           if (m.size == 0)
             x.size == 0
+          else if (x.rows != m.rows || x.cols != m.cols)
+            false
           else m.data.head match {
             case _: Int =>
               all(breeze.linalg.isClose(x, convert(m.asInstanceOf[DenseMatrix[Int]], Complex)))

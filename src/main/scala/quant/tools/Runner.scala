@@ -1,13 +1,15 @@
 package quant.tools
 
+import java.io.File
+
+import breeze.linalg.DenseMatrix
+import breeze.math.Complex
+
 import quant.algs.Razl
 import quant.implicits._
 import quant.tools.parsing.ComplexParser
-import breeze.linalg.{DenseMatrix, all, isClose}
-import breeze.math.Complex
 
 import scala.io.Source
-import java.io.File
 
 object Runner extends App with ComplexParser {
 

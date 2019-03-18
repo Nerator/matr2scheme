@@ -1,11 +1,11 @@
 package quant.algs
 
-import quant.implicits._
-
-import org.scalatest._
-import org.scalactic.Equality
-import breeze.math.Complex
 import breeze.linalg.{DenseMatrix, convert}
+import breeze.math.Complex
+import org.scalactic.Equality
+import org.scalatest._
+
+import quant.implicits._
 
 class RazlSpec extends FlatSpec with Matchers {
 

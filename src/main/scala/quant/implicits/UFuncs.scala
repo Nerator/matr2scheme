@@ -1,7 +1,7 @@
 package quant.implicits
 
-import breeze.math.Complex
 import breeze.linalg.{DenseMatrix, all, isClose}
+import breeze.math.Complex
 
 trait UFuncs {
 

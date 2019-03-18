@@ -32,4 +32,24 @@ class MatrixImplicitsSpec extends FlatSpec with Matchers {
     ), Complex).isUnitary shouldBe true
   }
 
+  it should "check for equality correctly" in {
+    m isClose m shouldBe true
+    m isClose convert(DenseMatrix(
+      Array(1, 2, 3),
+      Array(4, 5, 6)
+    ), Complex) shouldBe false
+    m isClose DenseMatrix(
+      Array(1, 2, 3),
+      Array(4, 5, 6)
+    ) shouldBe false
+    val m1 = DenseMatrix(
+      Array(Complex(1.0, 0.0), Complex(3.0, 0.0)),
+      Array(Complex(5.0, 0.0), Complex(7.0, 0.0))
+    )
+    m1 isClose DenseMatrix(
+      Array(1, 3),
+      Array(5, 7)
+    ) shouldBe true
+  }
+
 }
