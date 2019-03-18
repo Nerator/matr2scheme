@@ -33,6 +33,13 @@ import quant.implicits._
 """
   )
 
+Compile / scalacOptions ++= {
+  scalaBinaryVersion.value match {
+    case "2.11" => Seq("-Xexperimental")
+    case _ => Nil
+  }
+}
+
 lazy val packageVer = taskKey[File]("package zip file")
 
 packageVer := {
