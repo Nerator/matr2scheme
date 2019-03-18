@@ -24,30 +24,48 @@ object Runner extends App with ComplexParser {
       sys.exit
     } else {
       // Запустим алгоритм
-      val res = Razl.alg(m)
+      val res1 = Razl.algNielsenChang(m)
+      val res2 = Razl.algNakaharaOhmi(m)
 
       // Красиво выведем результат
-      println("Результат:")
-      res.zipWithIndex foreach {
+      println("Результат (по Нильсен, Чанг):")
+      res1.zipWithIndex foreach {
         case (m, i) =>
           println(s"Матрица №${i + 1}")
           println(m.toString(Int.MaxValue, Int.MaxValue))
       }
 
       println("Проверка равенства произведения матриц исходной:")
-      val check = res.reduce(_ * _)
-      if (all(isClose(check, m)))
+      val check1 = res1.reduce(_ * _)
+      if (check1.isClose(m))
         println("Произведение матриц равно исходной.")
       else {
         println("Произведение матриц НЕ РАВНО исходной!")
         println("Произведение:")
-        println(check.toString(Int.MaxValue, Int.MaxValue))
+        println(check1.toString(Int.MaxValue, Int.MaxValue))
+      }
+
+      println("\nРезультат (по Накахара, Оми):")
+      res2.zipWithIndex foreach {
+        case (m, i) =>
+          println(s"Матрица №${i + 1}")
+          println(m.toString(Int.MaxValue, Int.MaxValue))
+      }
+
+      println("Проверка равенства произведения матриц исходной:")
+      val check2 = res2.reduce(_ * _)
+      if (check2.isClose(m))
+        println("Произведение матриц равно исходной.")
+      else {
+        println("Произведение матриц НЕ РАВНО исходной!")
+        println("Произведение:")
+        println(check2.toString(Int.MaxValue, Int.MaxValue))
       }
     }
   }
 
   def printUsage: Unit = {
-    println("Использование: ./matr2scheme <имя файла>")
+    println("Использование:")
     println("./matr2scheme <имя файла>     (*nix)")
     println("matr2scheme.bat <имя файла>   (windows)")
     println("Файл должен содержать матрицу комплексных чисел по следующим правилам:")

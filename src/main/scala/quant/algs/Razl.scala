@@ -1,56 +1,60 @@
 package quant.algs
 
-import breeze.linalg.{DenseMatrix, all, convert, isClose}
+import breeze.linalg.{DenseMatrix, convert, isClose}
 import breeze.math.Complex
 
 import quant.implicits._
 
 object Razl {
 
-  def findNonzero(m: DenseMatrix[Complex]): (Int, Int) = {    
-    for (j <- 0 until m.rows) {
-      if (j != m.rows-1 && (isClose(m(j,j), -Complex.one))) {
-        return (j+1,j)
-      }
-      if (!isClose(m(j,j), Complex.one)) {
-        for (i <- j + 1 until m.cols) {
-          if (!isClose(m(i,j), Complex.zero)) {
-            return (i, j)
+  // As most of the code for algorithm is the same, we extract it in separate private method
+  private def alg(m: DenseMatrix[Complex], method: Method): List[DenseMatrix[Complex]] = {
+    // Constructing list of matrix indexes below main diagonal
+    val ij = for {
+      j <- 0 until m.cols
+      i <- 0 until m.rows if j < i
+    } yield (i,j)
+
+    // sanity check
+    require(ij.length == (1 until m.cols).sum)
+
+    ij.foldLeft((List[DenseMatrix[Complex]](), m)) {
+      case ((acc, mat), (i,j)) =>
+        val res = DenseMatrix.eye[Complex](m.rows)
+
+        if (i == mat.rows - 1 && j == mat.rows - 2) {
+          res(j, j) = mat(j, j).conjugate
+          res(j, i) = mat(i, j).conjugate
+          res(i, j) = mat(j, i).conjugate
+          res(i, i) = mat(i, i).conjugate
+        } else if (!isClose(mat(j, j), Complex.one)) {
+          val n = convert(math.sqrt(math.pow(mat(j, j).abs, 2.0) + math.pow(mat(i, j).abs, 2.0)), Complex)
+          if (!isClose(n, Complex.zero)) {
+            res(j, j) = mat(j, j).conjugate / n
+            res(j, i) = mat(i, j).conjugate / n
+            // Only difference between Nielsen and Nakahara methods
+            method match {
+              case Nielsen =>
+                res(i, j) = mat(i, j) / n
+                res(i, i) = -mat(j, j) / n
+              case Nakahara =>
+                res(i, j) = -mat(i, j) / n
+                res(i, i) = mat(j, j) / n
+            }
           }
         }
-      }
-    }
-    (m.rows-1,m.rows-2)
+        (res.t :: acc, res * mat)
+    }._1.reverse.filterNot(_.isClose(DenseMatrix.eye[Complex](m.rows)))
   }
 
-  private def findU(m: DenseMatrix[Complex], i: Int, j: Int): DenseMatrix[Complex] = {
-    require(j < i, s"j = $j, i = $i\n${m.toString}")
-    val res = DenseMatrix.eye[Complex](m.rows)
+  // Source: Nielsen & Chang
+  def algNielsenChang(m: DenseMatrix[Complex]): List[DenseMatrix[Complex]] = alg(m, Nielsen)
 
-    if (i == m.rows-1 && j == m.rows-2) {
-      res(j,j) = m(j,j).conjugate
-      res(j,i) = m(i,j).conjugate
-      res(i,j) = m(j,i).conjugate
-      res(i,i) = m(i,i).conjugate
-    } else {
-      val n = convert(math.sqrt(math.pow(m(j,j).abs, 2.0) + math.pow(m(i,j).abs, 2.0)), Complex)
-      res(j,j) = m(j,j).conjugate / n
-      res(j,i) = m(i,j).conjugate / n
-      res(i,j) = m(i,j) / n
-      res(i,i) = -m(j,j) / n
-    }
-    res
-  }
+  // Source: Nakahara & Ohmi
+  def algNakaharaOhmi(m: DenseMatrix[Complex]): List[DenseMatrix[Complex]] = alg(m, Nakahara)
 
-  def alg(m: DenseMatrix[Complex]): List[DenseMatrix[Complex]] = {
-    if (m.isClose(DenseMatrix.eye[Complex](m.rows)))
-      Nil
-    else {
-      val (i,j) = findNonzero(m)
-      val u = findU(m, i, j)
-      val newM = u * m
-      u.t :: alg(newM)
-    }
-  }
+  private sealed trait Method
+  private case object Nielsen extends Method
+  private case object Nakahara extends Method
 
 }
