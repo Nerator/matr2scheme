@@ -3,7 +3,7 @@ package quant.implicits
 import breeze.linalg.{DenseMatrix, all, convert}
 import breeze.math.Complex
 
-trait DenseMatrixImplicits {
+trait MatrixImplicits {
 
   implicit class RichDenseMatrix(x: DenseMatrix[Complex]) {
     def isUnitary: Boolean = (x * x.t) == DenseMatrix.eye[Complex](x.rows)

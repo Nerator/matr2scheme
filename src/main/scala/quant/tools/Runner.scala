@@ -15,7 +15,8 @@ object Runner extends App with ComplexParser {
 
   def runAlg(m: DenseMatrix[Complex]): Unit = {
     // Выведем её на экран
-    println(s"Исходная матрица:\n${m.toString(Int.MaxValue, Int.MaxValue)}")
+    println(s"Исходная матрица:\n${m.map(_.prettyPrint)}")
+    println()
 
     // Checks
     if (!m.isSquare) {
@@ -34,7 +35,7 @@ object Runner extends App with ComplexParser {
       res1.zipWithIndex foreach {
         case (m, i) =>
           println(s"Матрица №${i + 1}")
-          println(m.toString(Int.MaxValue, Int.MaxValue))
+          println(m.map(_.prettyPrint))
       }
 
       println("Проверка равенства произведения матриц исходной:")
@@ -44,14 +45,15 @@ object Runner extends App with ComplexParser {
       else {
         println("Произведение матриц НЕ РАВНО исходной!")
         println("Произведение:")
-        println(check1.toString(Int.MaxValue, Int.MaxValue))
+        println(check1.map(_.prettyPrint))
       }
+      println()
 
-      println("\nРезультат (по Накахара, Оми):")
+      println("Результат (по Накахара, Оми):")
       res2.zipWithIndex foreach {
         case (m, i) =>
           println(s"Матрица №${i + 1}")
-          println(m.toString(Int.MaxValue, Int.MaxValue))
+          println(m.map(_.prettyPrint))
       }
 
       println("Проверка равенства произведения матриц исходной:")
@@ -61,7 +63,7 @@ object Runner extends App with ComplexParser {
       else {
         println("Произведение матриц НЕ РАВНО исходной!")
         println("Произведение:")
-        println(check2.toString(Int.MaxValue, Int.MaxValue))
+        println(check2.map(_.prettyPrint))
       }
     }
   }

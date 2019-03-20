@@ -1,5 +1,6 @@
 package quant
 
 package object implicits
-    extends DenseMatrixImplicits
+    extends MatrixImplicits
+    with ComplexImplicits
     with UFuncs
