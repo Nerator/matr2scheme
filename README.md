@@ -4,32 +4,42 @@
 
 ## Overview
 
-Implementation of the algorithm for decomposition of arbitrary unitaty matrix into product of two-level matrices. The algorithm is described in the book __"Quantum computing : from linear algebra to physical realizations"__ by Mikio Nakahara and Tetsuo Ohmi in chapter 4.6.
+Implementation of the algorithm for decomposition of arbitrary unitaty matrix
+into product of two-level matrices. The algorithm is described in books
+__"Quantum Computation and Quantum Information"__ by Michael Nilsen and Isaac
+Chang (4.5.1 Two-level unitary gates are universal) and __"Quantum computing :
+from linear algebra to physical realizations"__ by Mikio Nakahara and Tetsuo
+Ohmi (4.6 Universal Quantum Gates).
 
 ## Building
 
-For Scala 2.12.6:
+For Scala 2.12.8:
 ``` shell
-sbt ++2.12.6 package
+sbt ++2.12.8 packageVer
 ```
 
 For Scala 2.11.12:
 ``` shell
-sbt ++2.11.12 package
+sbt ++2.11.12 packageVer
 ```
 
-For Scala 2.10.7:
-``` shell
-sbt ++2.10.7 package
-```
-
-Resulting JAR-files will be located at `target/scala2.12`, `target/scala2.11` or `target/scala2.10` respectively.
+Resulting zip-files will be located at `package` folder.
 
 ## Usage
 
-Running:
+Unzip archive with required Scala version to use. If you use Java 8 or later,
+use 2.12 version. Otherwise stick to 2.11.
+
+Running (Linux):
 ``` shell
-scala matr2scheme_<version> <filename>
+chmod +x matr2scheme
+./matr2scheme <filename>
 ```
 
-`file` should be text file with unitary matrix. Complex numbers entered like `(Re,Im)`.
+Running (Windows):
+``` shell
+matr2scheme.bat <filename>
+```
+
+`filename` should be text file with unitary matrix. Complex numbers entered like
+`(Re,Im)`. For more info run `matr2scheme` without parameters.

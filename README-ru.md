@@ -4,32 +4,42 @@
 
 ## Обзор
 
-Реализация алгоритма разложения произвольной унитарной матрицы в произведение двухуровневых матриц. Алгоритм описан в книге Микио Накахары и Тетсуо Оми __"Quantum computing : from linear algebra to physical realizations"__ в главе 4.6.
+Реализация алгоритма разложения произвольной унитарной матрицы в произведение
+двухуровневых матриц. Алгоритм описан в книгах __"Quantum Computation and
+Quantum Information"__ Майкла Нильсена и Исаака Чанга (4.5.1 Two-level unitary
+gates are universal) и __"Quantum computing : from linear algebra to physical
+realizations"__ Микио Накахары и Тетсуо Оми (4.6 Universal Quantum Gates).
 
 ## Сборка
 
-Для Scala 2.12.5:
+Для Scala 2.12.8:
 ``` shell
-sbt ++2.12.5 package
+sbt ++2.12.8 packageVer
 ```
 
 Для Scala 2.11.12:
 ``` shell
-sbt ++2.11.12 package
+sbt ++2.11.12 packageVer
 ```
 
-Для Scala 2.10.7:
-``` shell
-sbt ++2.10.7 package
-```
-
-Скомпилированные JAR-файлы будут находиться в `target/scala2.12`, `target/scala2.11` или `target/scala2.10` соответственно.
+Полученные zip-файлы будут находиться в папке `package`.
 
 ## Использование
 
-Запуск:
+Распакуйте архив с указанной требуемой версией Scala. Если вы используете Java 8
+или выше, используйте версию 2.12. В противном случае - 2.11.
+
+Запуск (Linux):
 ``` shell
-scala matr2scheme_<version> <filename>
+chmod +x matr2scheme
+./matr2scheme <filename>
 ```
 
-`file` должен быть текстовым файлом с унитарной матрицей. Комплексные числа вводятся в виде `(Re,Im)`.
+Запуск (Windows):
+``` shell
+matr2scheme.bat <filename>
+```
+
+`filename` должен быть текстовым файлом с унитарной матрицей. Комплексные числа
+вводятся в виде `(Re,Im)`. Для полной информации запустите `matr2scheme` без
+параметров.
