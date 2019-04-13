@@ -5,8 +5,6 @@ import org.scalatest._
 import breeze.math.Complex
 import breeze.linalg.DenseMatrix
 
-import quant.implicits._
-
 import scala.io.Source
 import scala.util.parsing.input.CharSequenceReader
 import scala.math._

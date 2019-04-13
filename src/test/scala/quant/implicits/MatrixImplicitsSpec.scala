@@ -5,11 +5,9 @@ import org.scalatest._
 import breeze.math.Complex
 import breeze.linalg.{DenseMatrix, convert}
 
-import quant.implicits._
-
 class MatrixImplicitsSpec extends FlatSpec with Matchers {
 
-  val m = DenseMatrix(
+  val m: DenseMatrix[Complex] = DenseMatrix(
     Array(Complex(1.0, 2.0), Complex(3.0, 4.0)),
     Array(Complex(5.0, 6.0), Complex(7.0, 8.0))
   )

@@ -13,22 +13,22 @@ import scala.io.Source
 
 object Runner extends App with ComplexParser {
 
-  def runAlg(m: DenseMatrix[Complex]): Unit = {
+  def runAlg(matrix: DenseMatrix[Complex]): Unit = {
     // Выведем её на экран
-    println(s"Исходная матрица:\n${m.map(_.prettyPrint)}")
+    println(s"Исходная матрица:\n${matrix.map(_.prettyPrint)}")
     println()
 
     // Checks
-    if (!m.isSquare) {
+    if (!matrix.isSquare) {
       println(s"Error: non-square matrix.")
       sys.exit
-    } else if (!m.isUnitary) {
+    } else if (!matrix.isUnitary) {
       println(s"Error: non-unitary matrix.")
       sys.exit
     } else {
       // Запустим алгоритм
-      val res1 = Razl.algNielsenChang(m)
-      val res2 = Razl.algNakaharaOhmi(m)
+      val res1 = Razl.algNielsenChang(matrix)
+      val res2 = Razl.algNakaharaOhmi(matrix)
 
       // Красиво выведем результат
       println("Результат (по Нильсен, Чанг):")
@@ -40,7 +40,7 @@ object Runner extends App with ComplexParser {
 
       println("Проверка равенства произведения матриц исходной:")
       val check1 = res1.reduce(_ * _)
-      if (check1.isClose(m))
+      if (check1.isClose(matrix))
         println("Произведение матриц равно исходной.")
       else {
         println("Произведение матриц НЕ РАВНО исходной!")
@@ -58,7 +58,7 @@ object Runner extends App with ComplexParser {
 
       println("Проверка равенства произведения матриц исходной:")
       val check2 = res2.reduce(_ * _)
-      if (check2.isClose(m))
+      if (check2.isClose(matrix))
         println("Произведение матриц равно исходной.")
       else {
         println("Произведение матриц НЕ РАВНО исходной!")
@@ -68,7 +68,7 @@ object Runner extends App with ComplexParser {
     }
   }
 
-  def printUsage: Unit = {
+  def printUsage(): Unit = {
     println("Использование:")
     println("./matr2scheme <имя файла>     (*nix)")
     println("matr2scheme.bat <имя файла>   (windows)")
@@ -90,17 +90,23 @@ object Runner extends App with ComplexParser {
   println()
 
   if (args.length != 1)
-    printUsage
-  else if (!(new File(args(0)).exists))
+    printUsage()
+  else if (!new File(args(0)).exists)
     println(s"""Ошибка: файл "${args(0)}" не найден.""")
   else {
-    val lines = Source.fromFile(args(0)).getLines.toList
-    val matrixOrError = parseMatrix(lines)
+    val source = Source.fromFile(args(0))
+    try {
+      val lines = source.getLines.toList
+      val matrixOrError = parseMatrix(lines)
 
-    matrixOrError.fold(
-      msg => println(s"Parsing error: $msg"),
-      m => runAlg(m)
-    )
+      matrixOrError.fold(
+        msg => println(s"Parsing error: $msg"),
+        m => runAlg(m)
+      )
+    } finally {
+      source.close()
+    }
+
   }
 
 }

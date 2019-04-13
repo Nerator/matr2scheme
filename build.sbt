@@ -79,6 +79,24 @@ import quant.implicits._
 """
   )
 
+// Fix for 2.11
+Compile / scalacOptions --= {
+  scalaBinaryVersion.value match {
+    case "2.11" => Seq(
+      "-Xlint:constant",
+      "-Ywarn-extra-implicit",
+      "-Ywarn-unused:implicits",
+      "-Ywarn-unused:imports",
+      "-Ywarn-unused:locals",
+      "-Ywarn-unused:params",
+      "-Ywarn-unused:patvars",
+      "-Ywarn-unused:privates"
+    )
+    case _      => Nil
+  }
+}
+
+// Fix for SAM syntax in 2.11
 Compile / scalacOptions ++= {
   scalaBinaryVersion.value match {
     case "2.11" => Seq("-Xexperimental")
