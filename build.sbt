@@ -102,6 +102,9 @@ Compile / scalacOptions ++= {
   }
 }
 
+// Fix for parser-combinator error in 2.11
+fork in Test := true
+
 lazy val packageVer = taskKey[File]("package zip file")
 
 packageVer := {
