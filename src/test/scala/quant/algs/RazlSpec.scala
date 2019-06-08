@@ -180,7 +180,16 @@ class RazlSpec extends FlatSpec with Matchers {
   // Tests
   // TODO: do we need exact tests?
 
-  "Algorithms" should "work correctly for m01" in {
+  "Algorithm" should "work correctly for eye matrix" in {
+    val m = DenseMatrix.eye[Complex](4)
+    val r1 = Razl.algNielsenChang(m)
+    val r2 = Razl.algNakaharaOhmi(m)
+
+    r1 reduce (_ * _) shouldEqual m
+    r2 reduce (_ * _) shouldEqual m
+  }
+
+  it should "work correctly for m01" in {
     val r1 = Razl.algNielsenChang(m01)
     val r2 = Razl.algNakaharaOhmi(m01)
 //    r match {
