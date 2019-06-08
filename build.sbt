@@ -1,5 +1,3 @@
-import Dependencies._
-
 lazy val root = (project in file("."))
   .enablePlugins(JavaAppPackaging)
   .settings(
@@ -58,16 +56,16 @@ lazy val root = (project in file("."))
     )),
     name := "matr2scheme",
     libraryDependencies ++= Seq(
-      scalaTest % Test,
-      breeze,
-      parserComb
+      "org.scalanlp"           %% "breeze"                   % "0.13.2",
+      "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.0",
+      "org.scalatest"          %% "scalatest"                % "3.0.5"   % Test
     ),
     (mappings in Universal) := {
       val universalMappings = (mappings in Universal).value
       val filtered = universalMappings filter { 
-        case (_, name) => 
-          !name.endsWith(".jar") || name.contains("scala-library") || 
-          name.contains("parser") || name.contains("breeze_") || name.contains("matr2scheme")
+        case (_, fileName) =>
+          !fileName.endsWith(".jar") || fileName.contains("scala-library") ||
+          fileName.contains("parser") || fileName.contains("breeze_") || fileName.contains("matr2scheme")
       }
       filtered
     },
