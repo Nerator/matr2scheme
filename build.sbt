@@ -57,8 +57,8 @@ lazy val root = (project in file("."))
     name := "matr2scheme",
     libraryDependencies ++= Seq(
       "org.scalanlp"           %% "breeze"                   % "0.13.2",
-      "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.0",
-      "org.scalatest"          %% "scalatest"                % "3.0.5"   % Test
+      "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
+      "org.scalatest"          %% "scalatest"                % "3.0.7"   % Test
     ),
     (mappings in Universal) := {
       val universalMappings = (mappings in Universal).value
