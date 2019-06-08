@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
     inThisBuild(List(
       organization       := "ru.dovzhikov",
       scalaVersion       := "2.12.8",
-      crossScalaVersions := Seq("2.11.12", "2.12.8"),
+      crossScalaVersions := Seq("2.11.12", "2.12.8", "2.13.0"),
       version            := "0.4.1",
       scalacOptions      ++= Seq(
         "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
