@@ -58,7 +58,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.scalanlp"           %% "breeze"                   % "0.13.2",
       "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
-      "org.scalatest"          %% "scalatest"                % "3.0.7"   % Test
+      "org.scalatest"          %% "scalatest"                % "3.0.8"   % Test
     ),
     (mappings in Universal) := {
       val universalMappings = (mappings in Universal).value
