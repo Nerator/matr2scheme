@@ -48,7 +48,7 @@ object Razl {
             }
           }
           (res.t :: acc, res * mat)
-      }._1.reverse.filterNot(_.isClose(DenseMatrix.eye[Complex](m.rows))) // TODO: avoid reverse?
+      }._1.reverse.filterNot(_.isClose(DenseMatrix.eye[Complex](m.rows)))
     }
   }
 
