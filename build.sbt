@@ -56,7 +56,7 @@ lazy val root = (project in file("."))
     )),
     name := "matr2scheme",
     libraryDependencies ++= Seq(
-      "org.scalanlp"           %% "breeze"                   % "0.13.2",
+      "org.scalanlp"           %% "breeze"                   % "1.0-RC4",
       "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
       "org.scalatest"          %% "scalatest"                % "3.0.8"   % Test
     ),
@@ -104,6 +104,35 @@ Compile / scalacOptions ++= {
 
 // Fix for parser-combinator error in 2.11
 fork in Test := true
+
+// Fix options for 2.13
+Compile / scalacOptions --= {
+  scalaBinaryVersion.value match {
+    case "2.13" => Seq(
+      "-Xfuture",
+      "-Xlint:by-name-right-associative",
+      "-Xlint:unsound-match",
+      "-Yno-adapted-args",
+      "-Ypartial-unification",
+      "-Ywarn-dead-code",
+      "-Ywarn-extra-implicit",
+      "-Ywarn-inaccessible",
+      "-Ywarn-infer-any",
+      "-Ywarn-nullary-override",
+      "-Ywarn-nullary-unit",
+      "-Ywarn-numeric-widen",
+      "-Ywarn-unused:implicits",
+      "-Ywarn-unused:imports",
+      "-Ywarn-unused:locals",
+      "-Ywarn-unused:params",
+      "-Ywarn-unused:patvars",
+      "-Ywarn-unused:privates",
+      "-Ywarn-value-discard"
+    )
+    case _      => Nil
+  }
+}
+
 
 lazy val packageVer = taskKey[File]("package zip file")
 
