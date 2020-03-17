@@ -134,4 +134,18 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
     }
   }
 
+  it should "parse matrix from bugfix" in {
+    val file = Source.fromURL(getClass.getResource("/matrix9.txt"))
+    parseMatrix(file.getLines.toList) match {
+      case Left(msg) => fail(s"Parsing failed: $msg")
+      case Right(m) =>
+        m shouldEqual DenseMatrix(
+          Array(0.0, 0.0, 0.0, 1.0),
+          Array(0.0, 0.0, 1.0, 0.0),
+          Array(sqrt(2)/2, sqrt(2)/2, 0.0, 0.0),
+          Array(sqrt(2)/2, -sqrt(2)/2, 0.0, 0.0)
+        )
+    }
+  }
+
 }

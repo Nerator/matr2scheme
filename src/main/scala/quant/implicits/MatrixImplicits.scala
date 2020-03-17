@@ -6,7 +6,8 @@ import breeze.math.Complex
 trait MatrixImplicits {
 
   implicit class RichDenseMatrix(x: DenseMatrix[Complex]) {
-    def isUnitary: Boolean = (x * x.t) == DenseMatrix.eye[Complex](x.rows)
+//    def isUnitary: Boolean = (x * x.t) == DenseMatrix.eye[Complex](x.rows)
+    def isUnitary: Boolean = (x * x.t).isClose(DenseMatrix.eye[Complex](x.rows))
     def isSquare: Boolean = x.rows == x.cols
     def isClose(other: Any): Boolean = {
       other match {
