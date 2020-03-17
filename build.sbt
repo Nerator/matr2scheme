@@ -4,8 +4,8 @@ lazy val root = (project in file("."))
     inThisBuild(List(
       organization       := "ru.dovzhikov",
       scalaVersion       := "2.12.8",
-      crossScalaVersions := Seq("2.11.12", "2.12.8", "2.13.0"),
-      version            := "0.4.1",
+      crossScalaVersions := Seq("2.11.12", "2.12.11", "2.13.1"),
+      version            := "0.4.2",
       scalacOptions      ++= Seq(
         "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
         "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -56,9 +56,9 @@ lazy val root = (project in file("."))
     )),
     name := "matr2scheme",
     libraryDependencies ++= Seq(
-      "org.scalanlp"           %% "breeze"                   % "1.0-RC4",
+      "org.scalanlp"           %% "breeze"                   % "1.0",
       "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
-      "org.scalatest"          %% "scalatest"                % "3.0.8"   % Test
+      "org.scalatest"          %% "scalatest"                % "3.1.1"   % Test
     ),
     (mappings in Universal) := {
       val universalMappings = (mappings in Universal).value

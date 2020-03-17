@@ -1,15 +1,16 @@
 package quant.tools.parsing
 
-import org.scalatest._
 
 import breeze.math.Complex
 import breeze.linalg.DenseMatrix
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.io.Source
 import scala.util.parsing.input.CharSequenceReader
 import scala.math._
 
-class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
+class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
 
   "Complex Parser" should "parse complex number" in {
     parse(complex, new PackratReader(new CharSequenceReader("(0,1)"))) match {
@@ -130,6 +131,20 @@ class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
       case Right(m) =>
         m shouldEqual DenseMatrix(
           Array(Complex(cos(cos(Pi * sin(2.0 / 3.0))),0))
+        )
+    }
+  }
+
+  it should "parse matrix from bugfix" in {
+    val file = Source.fromURL(getClass.getResource("/matrix9.txt"))
+    parseMatrix(file.getLines.toList) match {
+      case Left(msg) => fail(s"Parsing failed: $msg")
+      case Right(m) =>
+        m shouldEqual DenseMatrix(
+          Array(0.0, 0.0, 0.0, 1.0),
+          Array(0.0, 0.0, 1.0, 0.0),
+          Array(sqrt(2)/2, sqrt(2)/2, 0.0, 0.0),
+          Array(sqrt(2)/2, -sqrt(2)/2, 0.0, 0.0)
         )
     }
   }
