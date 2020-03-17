@@ -1,15 +1,16 @@
 package quant.tools.parsing
 
-import org.scalatest._
 
 import breeze.math.Complex
 import breeze.linalg.DenseMatrix
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.io.Source
 import scala.util.parsing.input.CharSequenceReader
 import scala.math._
 
-class ComplexParserSpec extends FlatSpec with Matchers with ComplexParser {
+class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
 
   "Complex Parser" should "parse complex number" in {
     parse(complex, new PackratReader(new CharSequenceReader("(0,1)"))) match {

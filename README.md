@@ -13,9 +13,14 @@ Ohmi (4.6 Universal Quantum Gates).
 
 ## Building
 
-For Scala 2.12.8:
+For Scala 2.13.1:
 ``` shell
-sbt ++2.12.8 packageVer
+sbt ++2.13.1 packageVer
+```
+
+For Scala 2.12.11:
+``` shell
+sbt ++2.12.11 packageVer
 ```
 
 For Scala 2.11.12:
@@ -28,11 +33,10 @@ Resulting zip-files will be located at `package` folder.
 ## Usage
 
 Unzip archive with required Scala version to use. If you use Java 8 or later,
-use 2.12 version. Otherwise stick to 2.11.
+use 2.13 or 2.12 version. Otherwise stick to 2.11.
 
 Running (Linux):
 ``` shell
-chmod +x matr2scheme
 ./matr2scheme <filename>
 ```
 

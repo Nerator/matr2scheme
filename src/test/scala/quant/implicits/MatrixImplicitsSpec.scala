@@ -1,11 +1,12 @@
 package quant.implicits
 
-import org.scalatest._
 
 import breeze.math.Complex
 import breeze.linalg.{DenseMatrix, convert}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class MatrixImplicitsSpec extends FlatSpec with Matchers {
+class MatrixImplicitsSpec extends AnyFlatSpec with Matchers {
 
   val m: DenseMatrix[Complex] = DenseMatrix(
     Array(Complex(1.0, 2.0), Complex(3.0, 4.0)),

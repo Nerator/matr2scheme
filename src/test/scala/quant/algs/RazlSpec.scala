@@ -3,10 +3,11 @@ package quant.algs
 import breeze.linalg.DenseMatrix
 import breeze.math.Complex
 import org.scalactic.Equality
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import quant.implicits._
 
-class RazlSpec extends FlatSpec with Matchers {
+class RazlSpec extends AnyFlatSpec with Matchers {
 
   // Переопределение равенства комплексных матриц для ScalaTest - с
   // использованием приближенного равенства

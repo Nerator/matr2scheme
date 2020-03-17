@@ -2,9 +2,10 @@ package quant.implicits
 
 import breeze.linalg.{DenseMatrix, isClose}
 import breeze.math.Complex
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class UFuncsSpec extends FlatSpec with Matchers {
+class UFuncsSpec extends AnyFlatSpec with Matchers {
 
   "isClose" should "work correctly for complex numbers" in {
     val c1 = Complex(1.0, 2.0)
