@@ -1,14 +1,14 @@
 package quant.tools.parsing
 
 
-import breeze.math.Complex
 import breeze.linalg.DenseMatrix
+import breeze.math.Complex
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 import scala.io.Source
-import scala.util.parsing.input.CharSequenceReader
 import scala.math._
+import scala.util.parsing.input.CharSequenceReader
 
 class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
 
@@ -43,10 +43,10 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(Complex.zero,   -Complex.i, Complex.zero, Complex.zero),
-          Array(   Complex.i, Complex.zero, Complex.zero, Complex.zero),
-          Array(Complex.zero, Complex.zero, Complex.zero,    Complex.i),
-          Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero)
+          Array(Complex.zero, -Complex.i, Complex.zero, Complex.zero),
+          Array(Complex.i, Complex.zero, Complex.zero, Complex.zero),
+          Array(Complex.zero, Complex.zero, Complex.zero, Complex.i),
+          Array(Complex.zero, Complex.zero, -Complex.i, Complex.zero)
         )
     }
   }
@@ -57,10 +57,10 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(Complex.zero,   -Complex.i, Complex.zero, Complex.zero),
-          Array(   Complex.i, Complex.zero, Complex.zero, Complex.zero),
-          Array(Complex.zero, Complex.zero, Complex.zero,    Complex.i),
-          Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero)
+          Array(Complex.zero, -Complex.i, Complex.zero, Complex.zero),
+          Array(Complex.i, Complex.zero, Complex.zero, Complex.zero),
+          Array(Complex.zero, Complex.zero, Complex.zero, Complex.i),
+          Array(Complex.zero, Complex.zero, -Complex.i, Complex.zero)
         )
     }
   }
@@ -71,8 +71,8 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(sqrt(1.0/2.0),  sqrt(1.0/2.0)),
-          Array(sqrt(1.0/2.0), -sqrt(1.0/2.0))
+          Array(sqrt(1.0 / 2.0), sqrt(1.0 / 2.0)),
+          Array(sqrt(1.0 / 2.0), -sqrt(1.0 / 2.0))
         )
     }
   }
@@ -83,8 +83,8 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(sqrt(1.0/2.0),  sqrt(1.0/2.0)),
-          Array(sqrt(1.0/2.0), -sqrt(1.0/2.0))
+          Array(sqrt(1.0 / 2.0), sqrt(1.0 / 2.0)),
+          Array(sqrt(1.0 / 2.0), -sqrt(1.0 / 2.0))
         )
     }
   }
@@ -95,8 +95,8 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(cos(3*Pi/4), sin(3*Pi/4)),
-          Array(sin(3*Pi/4), cos(3*Pi/4))
+          Array(cos(3 * Pi / 4), sin(3 * Pi / 4)),
+          Array(sin(3 * Pi / 4), cos(3 * Pi / 4))
         )
     }
     val file1 = Source.fromURL(getClass.getResource("/matrix8.txt"))
@@ -104,10 +104,10 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(Complex.zero,            Complex.zero,           Complex.zero,  Complex.one),
-          Array(Complex.zero,  Complex(cos(Pi/12), 0),  -Complex.i*sin(Pi/12), Complex.zero),
-          Array(Complex.zero,   -Complex.i*sin(Pi/12), Complex(cos(Pi/12), 0), Complex.zero),
-          Array(Complex.one,             Complex.zero,           Complex.zero, Complex.zero)
+          Array(Complex.zero, Complex.zero, Complex.zero, Complex.one),
+          Array(Complex.zero, Complex(cos(Pi / 12), 0), -Complex.i * sin(Pi / 12), Complex.zero),
+          Array(Complex.zero, -Complex.i * sin(Pi / 12), Complex(cos(Pi / 12), 0), Complex.zero),
+          Array(Complex.one, Complex.zero, Complex.zero, Complex.zero)
         )
     }
   }
@@ -130,7 +130,7 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
       case Left(msg) => fail(s"Parsing failed: $msg")
       case Right(m) =>
         m shouldEqual DenseMatrix(
-          Array(Complex(cos(cos(Pi * sin(2.0 / 3.0))),0))
+          Array(Complex(cos(cos(Pi * sin(2.0 / 3.0))), 0))
         )
     }
   }
@@ -143,8 +143,8 @@ class ComplexParserSpec extends AnyFlatSpec with Matchers with ComplexParser {
         m shouldEqual DenseMatrix(
           Array(0.0, 0.0, 0.0, 1.0),
           Array(0.0, 0.0, 1.0, 0.0),
-          Array(sqrt(2)/2, sqrt(2)/2, 0.0, 0.0),
-          Array(sqrt(2)/2, -sqrt(2)/2, 0.0, 0.0)
+          Array(sqrt(2) / 2, sqrt(2) / 2, 0.0, 0.0),
+          Array(sqrt(2) / 2, -sqrt(2) / 2, 0.0, 0.0)
         )
     }
   }

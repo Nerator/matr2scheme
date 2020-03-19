@@ -2,7 +2,6 @@ package quant.algs
 
 import breeze.linalg.{DenseMatrix, convert, isClose}
 import breeze.math.Complex
-
 import quant.implicits._
 
 object Razl {
@@ -17,13 +16,13 @@ object Razl {
       val ij = for {
         j <- 0 until m.cols
         i <- 0 until m.rows if j < i
-      } yield (i,j)
+      } yield (i, j)
 
       // sanity check
       require(ij.length == (1 until m.cols).sum)
 
       ij.foldLeft((List[DenseMatrix[Complex]](), m)) {
-        case ((acc, mat), (i,j)) =>
+        case ((acc, mat), (i, j)) =>
           val res = DenseMatrix.eye[Complex](m.rows)
 
           if (i == mat.rows - 1 && j == mat.rows - 2) {
@@ -59,7 +58,9 @@ object Razl {
   def algNakaharaOhmi(m: DenseMatrix[Complex]): List[DenseMatrix[Complex]] = alg(m, Nakahara)
 
   private sealed trait Method
+
   private case object Nielsen extends Method
+
   private case object Nakahara extends Method
 
 }

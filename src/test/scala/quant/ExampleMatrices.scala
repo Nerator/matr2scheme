@@ -62,10 +62,10 @@ object ExampleMatrices {
   ), Complex)
 
   val m09: DenseMatrix[Complex] = DenseMatrix(
-    Array(Complex.zero,   -Complex.i, Complex.zero, Complex.zero),
-    Array(   Complex.i, Complex.zero, Complex.zero, Complex.zero),
-    Array(Complex.zero, Complex.zero, Complex.zero,    Complex.i),
-    Array(Complex.zero, Complex.zero,   -Complex.i, Complex.zero)
+    Array(Complex.zero, -Complex.i, Complex.zero, Complex.zero),
+    Array(Complex.i, Complex.zero, Complex.zero, Complex.zero),
+    Array(Complex.zero, Complex.zero, Complex.zero, Complex.i),
+    Array(Complex.zero, Complex.zero, -Complex.i, Complex.zero)
   )
 
   val m10: DenseMatrix[Complex] = convert(DenseMatrix(
@@ -78,40 +78,40 @@ object ExampleMatrices {
   // Раздел 2 задание 3
 
   val m11: DenseMatrix[Complex] = DenseMatrix(
-    Array( Complex.one, Complex.zero, Complex.zero, Complex.zero),
-    Array(Complex.zero, Complex.zero,  Complex.one, Complex.zero),
-    Array(Complex.zero,  Complex.one, Complex.zero, Complex.zero),
-    Array(Complex.zero, Complex.zero, Complex.zero,    Complex.i)
+    Array(Complex.one, Complex.zero, Complex.zero, Complex.zero),
+    Array(Complex.zero, Complex.zero, Complex.one, Complex.zero),
+    Array(Complex.zero, Complex.one, Complex.zero, Complex.zero),
+    Array(Complex.zero, Complex.zero, Complex.zero, Complex.i)
   )
 
   val m12: DenseMatrix[Complex] = Complex(0.5, 0) * DenseMatrix(
-    Array( Complex.one,  Complex.one,  Complex.one,  Complex.one),
-    Array( Complex.one,    Complex.i, -Complex.one,   -Complex.i),
-    Array( Complex.one, -Complex.one,  Complex.one, -Complex.one),
-    Array( Complex.one,   -Complex.i, -Complex.one,    Complex.i)
+    Array(Complex.one, Complex.one, Complex.one, Complex.one),
+    Array(Complex.one, Complex.i, -Complex.one, -Complex.i),
+    Array(Complex.one, -Complex.one, Complex.one, -Complex.one),
+    Array(Complex.one, -Complex.i, -Complex.one, Complex.i)
   )
 
   // Раздел 2 задание 6
 
   val m13: DenseMatrix[Complex] = convert(DenseMatrix(
     Array(-1, 0, 0, 0),
-    Array( 0, 1, 0, 0),
-    Array( 0, 0, 1, 0),
-    Array( 0, 0, 0, 1)
+    Array(0, 1, 0, 0),
+    Array(0, 0, 1, 0),
+    Array(0, 0, 0, 1)
   ), Complex)
 
   val m14: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array( 1,  0,  0,  0),
-    Array( 0, -1,  0,  0),
-    Array( 0,  0, -1,  0),
-    Array( 0,  0,  0, -1)
+    Array(1, 0, 0, 0),
+    Array(0, -1, 0, 0),
+    Array(0, 0, -1, 0),
+    Array(0, 0, 0, -1)
   ), Complex)
 
   val m15: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array( 1,  0,  0,  0),
-    Array( 0,  0, -1,  0),
-    Array( 0, -1,  0,  0),
-    Array( 0,  0,  0, -1)
+    Array(1, 0, 0, 0),
+    Array(0, 0, -1, 0),
+    Array(0, -1, 0, 0),
+    Array(0, 0, 0, -1)
   ), Complex)
 
   // Раздел 3 задание 3
@@ -148,22 +148,22 @@ object ExampleMatrices {
   ), Complex)
 
   val m19: DenseMatrix[Complex] = {
-    val b = math.sqrt(1.0/2.0)
+    val b = math.sqrt(1.0 / 2.0)
     convert(DenseMatrix(
-      Array(0.0,   b, 0.0,  -b),
+      Array(0.0, b, 0.0, -b),
       Array(0.0, 0.0, 1.0, 0.0),
-      Array(0.0,   b, 0.0,   b),
+      Array(0.0, b, 0.0, b),
       Array(1.0, 0.0, 0.0, 0.0)
     ), Complex)
   }
 
   val m20: DenseMatrix[Complex] = {
-    val b = math.sqrt(1.0/2.0)
+    val b = math.sqrt(1.0 / 2.0)
     convert(DenseMatrix(
       Array(0.0, 0.0, 0.0, 1.0),
       Array(0.0, 0.0, 1.0, 0.0),
-      Array(  b,   b, 0.0, 0.0),
-      Array(  b,  -b, 0.0, 0.0)
+      Array(b, b, 0.0, 0.0),
+      Array(b, -b, 0.0, 0.0)
     ), Complex)
   }
 }

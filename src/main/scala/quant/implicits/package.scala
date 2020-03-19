@@ -1,6 +1,6 @@
 package quant
 
 package object implicits
-    extends MatrixImplicits
+  extends MatrixImplicits
     with ComplexImplicits
     with UFuncs

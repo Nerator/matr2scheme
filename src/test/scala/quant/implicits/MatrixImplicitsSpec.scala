@@ -1,8 +1,8 @@
 package quant.implicits
 
 
-import breeze.math.Complex
 import breeze.linalg.{DenseMatrix, convert}
+import breeze.math.Complex
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -16,18 +16,18 @@ class MatrixImplicitsSpec extends AnyFlatSpec with Matchers {
   "DenseMatrix" should "check if it's square matrix correctly" in {
     m.isSquare shouldBe true
     convert(DenseMatrix(
-        Array(1, 2, 3),
-        Array(4, 5, 6)
+      Array(1, 2, 3),
+      Array(4, 5, 6)
     ), Complex).isSquare shouldBe false
   }
 
   it should "check if it's unitary matrix correctly" in {
     m.isUnitary shouldBe false
     convert(DenseMatrix(
-        Array(1, 0, 0, 0),
-        Array(0, 1, 0, 0),
-        Array(0, 0, 0, 1),
-        Array(0, 0, 1, 0)
+      Array(1, 0, 0, 0),
+      Array(0, 1, 0, 0),
+      Array(0, 0, 0, 1),
+      Array(0, 0, 1, 0)
     ), Complex).isUnitary shouldBe true
   }
 

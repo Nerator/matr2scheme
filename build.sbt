@@ -1,3 +1,4 @@
+val catsVersion = "2.0.0"
 lazy val root = (project in file("."))
   .enablePlugins(JavaAppPackaging)
   .settings(
@@ -5,7 +6,7 @@ lazy val root = (project in file("."))
       organization       := "ru.dovzhikov",
       scalaVersion       := "2.12.8",
       crossScalaVersions := Seq("2.11.12", "2.12.11", "2.13.1"),
-      version            := "0.4.2",
+      version            := "0.4.2-SNAPSHOT",
       scalacOptions      ++= Seq(
         "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
         "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -57,6 +58,8 @@ lazy val root = (project in file("."))
     name := "matr2scheme",
     libraryDependencies ++= Seq(
       "org.scalanlp"           %% "breeze"                   % "1.0",
+      "org.typelevel"          %% "cats-core"                % catsVersion,
+      "org.typelevel"          %% "cats-effect"              % catsVersion,
       "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
       "org.scalatest"          %% "scalatest"                % "3.1.1"   % Test
     ),
@@ -132,7 +135,6 @@ Compile / scalacOptions --= {
     case _      => Nil
   }
 }
-
 
 lazy val packageVer = taskKey[File]("package zip file")
 
