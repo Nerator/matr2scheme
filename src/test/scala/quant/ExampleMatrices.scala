@@ -1,169 +1,202 @@
 package quant
 
-import breeze.linalg.{DenseMatrix, convert}
-import breeze.math.Complex
+import cats.syntax.functor._
+import quant.instances.matrix._
+import quant.math.Matrix
+import spire.math.{Complex, Real}
 
 object ExampleMatrices {
-  // Раздел 2 задание 1
-  val m01: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 0, 0, 1),
-    Array(0, 0, 1, 0),
-    Array(1, 0, 0, 0),
-    Array(0, 1, 0, 0)
-  ), Complex)
-
-  val m02: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 0, 1, 0),
-    Array(0, 0, 0, 1),
-    Array(0, 1, 0, 0),
-    Array(1, 0, 0, 0)
-  ), Complex)
-
-  val m03: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 0, 1, 0),
-    Array(1, 0, 0, 0),
-    Array(0, 0, 0, 1),
-    Array(0, 1, 0, 0)
-  ), Complex)
-
-  val m04: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 1, 0, 0),
-    Array(0, 0, 0, 1),
-    Array(1, 0, 0, 0),
-    Array(0, 0, 1, 0)
-  ), Complex)
-
-  val m05: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 1, 0, 0),
-    Array(0, 0, 1, 0),
-    Array(0, 0, 0, 1),
-    Array(1, 0, 0, 0)
-  ), Complex)
-
-  val m06: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 0, 0, 1),
-    Array(1, 0, 0, 0),
-    Array(0, 1, 0, 0),
-    Array(0, 0, 1, 0)
-  ), Complex)
-
-  val m07: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(1, 0, 0, 0),
-    Array(0, 0, 0, 1),
-    Array(0, 1, 0, 0),
-    Array(0, 0, 1, 0)
-  ), Complex)
-
-  val m08: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(1, 0, 0, 0),
-    Array(0, 0, 1, 0),
-    Array(0, 0, 0, 1),
-    Array(0, 1, 0, 0)
-  ), Complex)
-
-  val m09: DenseMatrix[Complex] = DenseMatrix(
-    Array(Complex.zero, -Complex.i, Complex.zero, Complex.zero),
-    Array(Complex.i, Complex.zero, Complex.zero, Complex.zero),
-    Array(Complex.zero, Complex.zero, Complex.zero, Complex.i),
-    Array(Complex.zero, Complex.zero, -Complex.i, Complex.zero)
+  val razlMatrices: List[Matrix[Complex[Real]]] = List(
+    // Раздел 2 задание 1
+    Matrix(
+      Vector(0, 0, 0, 1),
+      Vector(0, 0, 1, 0),
+      Vector(1, 0, 0, 0),
+      Vector(0, 1, 0, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(0, 0, 1, 0),
+      Vector(0, 0, 0, 1),
+      Vector(0, 1, 0, 0),
+      Vector(1, 0, 0, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(0, 0, 1, 0),
+      Vector(1, 0, 0, 0),
+      Vector(0, 0, 0, 1),
+      Vector(0, 1, 0, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(0, 1, 0, 0),
+      Vector(0, 0, 0, 1),
+      Vector(1, 0, 0, 0),
+      Vector(0, 0, 1, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(0, 1, 0, 0),
+      Vector(0, 0, 1, 0),
+      Vector(0, 0, 0, 1),
+      Vector(1, 0, 0, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(0, 0, 0, 1),
+      Vector(1, 0, 0, 0),
+      Vector(0, 1, 0, 0),
+      Vector(0, 0, 1, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(1, 0, 0, 0),
+      Vector(0, 0, 0, 1),
+      Vector(0, 1, 0, 0),
+      Vector(0, 0, 1, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(1, 0, 0, 0),
+      Vector(0, 0, 1, 0),
+      Vector(0, 0, 0, 1),
+      Vector(0, 1, 0, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector((0, 0), (0, -1), (0, 0), (0, 0)),
+      Vector((0, 1), (0, 0), (0, 0), (0, 0)),
+      Vector((0, 0), (0, 0), (0, 0), (0, 1)),
+      Vector((0, 0), (0, 0), (0, -1), (0, 0))
+    ) map { case (r, i) => Complex(r, i) },
+    Matrix(
+      Vector(0, 0, 0, 1),
+      Vector(0, 0, 1, 0),
+      Vector(0, 1, 0, 0),
+      Vector(1, 0, 0, 0)
+    ) map (Complex(_)),
+    // Раздел 2 задание 3
+    Matrix(
+      Vector((1, 0), (0, 0), (0, 0), (0, 0)),
+      Vector((0, 0), (0, 0), (1, 0), (0, 0)),
+      Vector((0, 0), (1, 0), (0, 0), (0, 0)),
+      Vector((0, 0), (0, 0), (0, 0), (0, 1))
+    ) map { case (r, i) => Complex(r, i) },
+    Matrix(
+      Vector((1, 0), (1, 0), (1, 0), (1, 0)),
+      Vector((1, 0), (0, 1), (-1, 0), (0, -1)),
+      Vector((1, 0), (-1, 0), (1, 0), (-1, 0)),
+      Vector((1, 0), (0, -1), (-1, 0), (0, 1))
+    ).map { case (r, i) => Complex[Real](r, i) } :* Complex(Real.one / 2),
+    // Раздел 2 задание 6
+    Matrix(
+      Vector(-1, 0, 0, 0),
+      Vector(0, 1, 0, 0),
+      Vector(0, 0, 1, 0),
+      Vector(0, 0, 0, 1)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(1, 0, 0, 0),
+      Vector(0, -1, 0, 0),
+      Vector(0, 0, -1, 0),
+      Vector(0, 0, 0, -1)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(1, 0, 0, 0),
+      Vector(0, 0, -1, 0),
+      Vector(0, -1, 0, 0),
+      Vector(0, 0, 0, -1)
+    ) map (a => Complex(a)),
+    // Раздел 3 задание 3
+    Matrix(
+      Vector(1, 0, 0, 0, 0, 0, 0, 0),
+      Vector(0, 0, 0, 0, 0, 0, 0, 1),
+      Vector(0, 1, 0, 0, 0, 0, 0, 0),
+      Vector(0, 0, 1, 0, 0, 0, 0, 0),
+      Vector(0, 0, 0, 1, 0, 0, 0, 0),
+      Vector(0, 0, 0, 0, 1, 0, 0, 0),
+      Vector(0, 0, 0, 0, 0, 1, 0, 0),
+      Vector(0, 0, 0, 0, 0, 0, 1, 0)
+    ) map (a => Complex(a)),
+    Matrix(
+      Vector(1, 0, 0, 0, 0, 0, 0, 0),
+      Vector(0, 0, 1, 0, 0, 0, 0, 0),
+      Vector(0, 0, 0, 1, 0, 0, 0, 0),
+      Vector(0, 0, 0, 0, 1, 0, 0, 0),
+      Vector(0, 0, 0, 0, 0, 1, 0, 0),
+      Vector(0, 0, 0, 0, 0, 0, 1, 0),
+      Vector(0, 0, 0, 0, 0, 0, 0, 1),
+      Vector(0, 1, 0, 0, 0, 0, 0, 0)
+    ) map (a => Complex(a)),
+    // Раздел 4 задание 1, в (б) и (в) подставим b = sqrt(1/2)
+    Matrix(
+      Vector(0, 1, 0, 0),
+      Vector(1, 0, 0, 0),
+      Vector(0, 0, 0, 1),
+      Vector(0, 0, 1, 0)
+    ) map (a => Complex(a)),
+    {
+      val b = Real.sqrt1By2
+      Matrix(
+        Vector(Real.zero, b, Real.zero, -b),
+        Vector(Real.zero, Real.zero, Real.one, Real.zero),
+        Vector(Real.zero, b, Real.zero, b),
+        Vector(Real.one, Real.zero, Real.zero, Real.zero)
+      ) map (a => Complex(a))
+    },
+    {
+      val b = Real.sqrt1By2
+      Matrix(
+        Vector(Real.zero, Real.zero, Real.zero, Real.one),
+        Vector(Real.zero, Real.zero, Real.one, Real.zero),
+        Vector(b, b, Real.zero, Real.zero),
+        Vector(b, -b, Real.zero, Real.zero)
+      ) map (a => Complex(a))
+    }
   )
 
-  val m10: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 0, 0, 1),
-    Array(0, 0, 1, 0),
-    Array(0, 1, 0, 0),
-    Array(1, 0, 0, 0)
-  ), Complex)
-
-  // Раздел 2 задание 3
-
-  val m11: DenseMatrix[Complex] = DenseMatrix(
-    Array(Complex.one, Complex.zero, Complex.zero, Complex.zero),
-    Array(Complex.zero, Complex.zero, Complex.one, Complex.zero),
-    Array(Complex.zero, Complex.one, Complex.zero, Complex.zero),
-    Array(Complex.zero, Complex.zero, Complex.zero, Complex.i)
+  val parserMatrices: List[Matrix[Complex[Real]]] = List(
+    Matrix(
+      Vector(1, 0, 0, 0),
+      Vector(0, 1, 0, 0),
+      Vector(0, 0, 0, 1),
+      Vector(0, 0, 1, 0)
+    ).map(a => Complex(Real(a))),
+    Matrix(
+      Vector((0, 0), (0, -1), (0, 0), (0, 0)),
+      Vector((0, 1), (0, 0), (0, 0), (0, 0)),
+      Vector((0, 0), (0, 0), (0, 0), (0, 1)),
+      Vector((0, 0), (0, 0), (0, -1), (0, 0))
+    ) map { case (r, i) => Complex(Real(r), Real(i)) },
+    Matrix(
+      Vector((0, 0), (0, -1), (0, 0), (0, 0)),
+      Vector((0, 1), (0, 0), (0, 0), (0, 0)),
+      Vector((0, 0), (0, 0), (0, 0), (0, 1)),
+      Vector((0, 0), (0, 0), (0, -1), (0, 0))
+    ) map { case (r, i) => Complex(Real(r), Real(i)) },
+    Matrix(
+      Vector(Real.sqrt1By2, Real.sqrt1By2),
+      Vector(Real.sqrt1By2, -Real.sqrt1By2)
+    ).map(Complex(_)),
+    Matrix(
+      Vector(Real.sqrt1By2, Real.sqrt1By2),
+      Vector(Real.sqrt1By2, -Real.sqrt1By2)
+    ).map(Complex(_)),
+    Matrix(
+      Vector(Real.cos(Real.pi * 3 / 4), Real.sin(Real.pi * 3 / 4)),
+      Vector(Real.sin(Real.pi * 3 / 4), Real.cos(Real.pi * 3 / 4))
+    ) map (Complex(_)),
+    Matrix(
+      Vector(-1, -1),
+      Vector(-1, -1)
+    ) map (a => Complex(Real(a))),
+    Matrix(
+      Vector(Complex(Real.cos(Real.cos(Real.pi * Real.sin(Real.two / 3)))))
+    ),
+    Matrix(
+      Vector((Real.zero, Real.zero), (Real.zero, Real.zero), (Real.zero, Real.zero), (Real.one, Real.zero)),
+      Vector((Real.zero, Real.zero), (Real.cos(Real.pi / 12), Real.zero), (Real.zero, -Real.sin(Real.pi / 12)), (Real.zero, Real.zero)),
+      Vector((Real.zero, Real.zero), (Real.zero, -Real.sin(Real.pi / 12)), (Real.cos(Real.pi / 12), Real.zero), (Real.zero, Real.zero)),
+      Vector((Real.one, Real.zero), (Real.zero, Real.zero), (Real.zero, Real.zero), (Real.zero, Real.zero))
+    ) map { case (r, i) => Complex(r, i) },
+    Matrix(
+      Vector(Real.zero, Real.zero, Real.zero, Real.one),
+      Vector(Real.zero, Real.zero, Real.one, Real.zero),
+      Vector(Real.sqrt1By2, Real.sqrt1By2, Real.zero, Real.zero),
+      Vector(Real.sqrt1By2, -Real.sqrt1By2, Real.zero, Real.zero)
+    ).map(Complex(_))
   )
-
-  val m12: DenseMatrix[Complex] = Complex(0.5, 0) * DenseMatrix(
-    Array(Complex.one, Complex.one, Complex.one, Complex.one),
-    Array(Complex.one, Complex.i, -Complex.one, -Complex.i),
-    Array(Complex.one, -Complex.one, Complex.one, -Complex.one),
-    Array(Complex.one, -Complex.i, -Complex.one, Complex.i)
-  )
-
-  // Раздел 2 задание 6
-
-  val m13: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(-1, 0, 0, 0),
-    Array(0, 1, 0, 0),
-    Array(0, 0, 1, 0),
-    Array(0, 0, 0, 1)
-  ), Complex)
-
-  val m14: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(1, 0, 0, 0),
-    Array(0, -1, 0, 0),
-    Array(0, 0, -1, 0),
-    Array(0, 0, 0, -1)
-  ), Complex)
-
-  val m15: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(1, 0, 0, 0),
-    Array(0, 0, -1, 0),
-    Array(0, -1, 0, 0),
-    Array(0, 0, 0, -1)
-  ), Complex)
-
-  // Раздел 3 задание 3
-
-  val m16: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(1, 0, 0, 0, 0, 0, 0, 0),
-    Array(0, 0, 0, 0, 0, 0, 0, 1),
-    Array(0, 1, 0, 0, 0, 0, 0, 0),
-    Array(0, 0, 1, 0, 0, 0, 0, 0),
-    Array(0, 0, 0, 1, 0, 0, 0, 0),
-    Array(0, 0, 0, 0, 1, 0, 0, 0),
-    Array(0, 0, 0, 0, 0, 1, 0, 0),
-    Array(0, 0, 0, 0, 0, 0, 1, 0)
-  ), Complex)
-
-  val m17: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(1, 0, 0, 0, 0, 0, 0, 0),
-    Array(0, 0, 1, 0, 0, 0, 0, 0),
-    Array(0, 0, 0, 1, 0, 0, 0, 0),
-    Array(0, 0, 0, 0, 1, 0, 0, 0),
-    Array(0, 0, 0, 0, 0, 1, 0, 0),
-    Array(0, 0, 0, 0, 0, 0, 1, 0),
-    Array(0, 0, 0, 0, 0, 0, 0, 1),
-    Array(0, 1, 0, 0, 0, 0, 0, 0)
-  ), Complex)
-
-  // Раздел 4 задание 1, в (б) и (в) подставим b = sqrt(1/2)
-
-  val m18: DenseMatrix[Complex] = convert(DenseMatrix(
-    Array(0, 1, 0, 0),
-    Array(1, 0, 0, 0),
-    Array(0, 0, 0, 1),
-    Array(0, 0, 1, 0)
-  ), Complex)
-
-  val m19: DenseMatrix[Complex] = {
-    val b = math.sqrt(1.0 / 2.0)
-    convert(DenseMatrix(
-      Array(0.0, b, 0.0, -b),
-      Array(0.0, 0.0, 1.0, 0.0),
-      Array(0.0, b, 0.0, b),
-      Array(1.0, 0.0, 0.0, 0.0)
-    ), Complex)
-  }
-
-  val m20: DenseMatrix[Complex] = {
-    val b = math.sqrt(1.0 / 2.0)
-    convert(DenseMatrix(
-      Array(0.0, 0.0, 0.0, 1.0),
-      Array(0.0, 0.0, 1.0, 0.0),
-      Array(b, b, 0.0, 0.0),
-      Array(b, -b, 0.0, 0.0)
-    ), Complex)
-  }
 }

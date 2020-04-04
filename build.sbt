@@ -1,12 +1,14 @@
 val catsVersion = "2.0.0"
+val spireVersion = "0.17.0-M1"
+
 lazy val root = (project in file("."))
   .enablePlugins(JavaAppPackaging)
   .settings(
     inThisBuild(List(
       organization       := "ru.dovzhikov",
-      scalaVersion       := "2.12.8",
+      scalaVersion       := "2.11.12",
       crossScalaVersions := Seq("2.11.12", "2.12.11", "2.13.1"),
-      version            := "0.4.2-SNAPSHOT",
+      version            := "0.5.0",
       scalacOptions      ++= Seq(
         "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
         "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -47,7 +49,7 @@ lazy val root = (project in file("."))
         "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
         "-Ywarn-numeric-widen",              // Warn when numerics are widened.
         "-Ywarn-unused:implicits",           // Warn if an implicit parameter is unused.
-        "-Ywarn-unused:imports",             // Warn if an import selector is not referenced.
+//        "-Ywarn-unused:imports",             // Warn if an import selector is not referenced.
         "-Ywarn-unused:locals",              // Warn if a local definition is unused.
         "-Ywarn-unused:params",              // Warn if a value parameter is unused.
         "-Ywarn-unused:patvars",             // Warn if a variable bound in a pattern is unused.
@@ -55,28 +57,32 @@ lazy val root = (project in file("."))
         "-Ywarn-value-discard"               // Warn when non-Unit expression results are unused.
       )
     )),
+    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.11.0" cross CrossVersion.full),
     name := "matr2scheme",
     libraryDependencies ++= Seq(
-      "org.scalanlp"           %% "breeze"                   % "1.0",
       "org.typelevel"          %% "cats-core"                % catsVersion,
       "org.typelevel"          %% "cats-effect"              % catsVersion,
-      "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
-      "org.scalatest"          %% "scalatest"                % "3.1.1"   % Test
+      "org.typelevel"          %% "spire"                    % spireVersion,
+      "org.tpolecat"           %% "atto-core"                % "0.7.2",
+      "org.scalacheck"         %% "scalacheck"               % "1.14.3" % Test,
+      "org.typelevel"          %% "cats-laws"                % catsVersion % Test,
+      "org.typelevel"          %% "spire-laws"               % spireVersion % Test,
     ),
     (mappings in Universal) := {
       val universalMappings = (mappings in Universal).value
-      val filtered = universalMappings filter { 
+      val filtered = universalMappings filter {
         case (_, fileName) =>
+          println(s"debug: filename = $fileName")
+
           !fileName.endsWith(".jar") || fileName.contains("scala-library") ||
-          fileName.contains("parser") || fileName.contains("breeze_") || fileName.contains("matr2scheme")
+            fileName.contains("atto") || fileName.contains("cats") ||
+            fileName.contains("spire_") || fileName.contains("algebra") ||
+            fileName.contains("matr2scheme")
       }
       filtered
     },
     initialCommands in console := 
-"""import breeze.numerics._
-import breeze.math._
-import breeze.linalg._
-import quant.implicits._
+"""import quant.instances.all._
 """
   )
 
@@ -101,7 +107,7 @@ Compile / scalacOptions --= {
 Compile / scalacOptions ++= {
   scalaBinaryVersion.value match {
     case "2.11" => Seq("-Xexperimental")
-    case _ => Nil
+    case _      => Nil
   }
 }
 
