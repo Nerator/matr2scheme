@@ -1,47 +1,60 @@
 package quant.tools.parsing
 
-import breeze.linalg.{DenseMatrix, convert}
-import breeze.math.Complex
+import atto.Atto._
+import atto.{ParseResult, Parser}
+import cats.instances.either._
+import cats.instances.vector._
+import cats.syntax.apply._
+import cats.syntax.either._
+import cats.syntax.traverse._
+import quant.math.Matrix
+import spire.math.{Complex, Real}
 
-import scala.util.parsing.combinator.{JavaTokenParsers, PackratParsers}
-import scala.util.parsing.input.CharSequenceReader
+object ComplexParser {
+  def number: Parser[Real] =
+    token(stringCI("pi")).map(_ => Real.pi) |
+      token(double).map(Real.apply)
 
-trait ComplexParser extends JavaTokenParsers with PackratParsers {
+  // Fixes default parens, so p is really lazy
+  def myParens[A](p: => Parser[A]): Parser[A] =
+    bracket(char('('), token(p), char(')')) // Notice the absence of named
 
-  def number: Parser[Double] =
-    floatingPointNumber ^^ (_.toDouble) |
-    "[Pp][Ii]".r ^^ (_ => math.Pi)
+  def rexpr: Parser[Real] = {
+    (char('-') ~> rexpr).map(-_) |
+      (stringOf(letterOrDigit), token(myParens(rexpr)), token(rexpr1)).mapN {
+        case ("sin", n, de1) => de1(Real.sin(n))
+        case ("cos", n, de1) => de1(Real.cos(n))
+        case ("sqrt", n, de1) => de1(n.sqrt())
+        case _ => ???
+      } |
+      (number, token(rexpr1)).mapN {
+        case (n, de1) => de1(n)
+      }
+  }
 
-  lazy val dexpr: PackratParser[Double] =
-    "-" ~> dexpr ^^ (-_) |
-    dexpr ~ ("*" ~> dexpr) ^^ { case md ~ n => md * n } |
-    dexpr ~ ("/" ~> dexpr) ^^ { case md ~ n => md / n } |
-    (ident ~ ("(" ~> dexpr <~ ")")) ^^ {
-      case "sin" ~ n => math.sin(n)
-      case "cos" ~ n => math.cos(n)
-      case "sqrt" ~ n => math.sqrt(n)
-      case _ => ???
+  // Rewrite to avoid left recursion
+  private def rexpr1: Parser[Real => Real] =
+    (token(char('*')) ~> rexpr, delay(rexpr1)).mapN { case (r, efu) =>
+      (l: Real) => efu(l * r)
     } |
-    number
+      (token(char('/')) ~> rexpr, delay(rexpr1)).mapN { case (r, efu) =>
+        (l: Real) => efu(l / r)
+      } |
+      ok(()).map(_ => identity)
 
-  def complex: Parser[Complex] =
-    ("(" ~> dexpr ~ ("," ~> dexpr <~ ")")) ^^ { case re ~ im => Complex(re,im) } |
-    dexpr ^^ (convert(_, Complex))
+  def complex: Parser[Complex[Real]] =
+    myParens((token(rexpr), token(char(',')) ~> token(rexpr)).mapN(Complex.apply)) |
+      rexpr.map(Complex(_))
 
-  def row: Parser[Array[Complex]] =
-    complex.* ^^ (_.toArray)
+  def row: Parser[Vector[Complex[Real]]] =
+    many(token(complex)).map(_.toVector)
 
-  def parseMatrix(ss: List[String]): Either[String, DenseMatrix[Complex]] =
-    (for (l <- ss) yield parse(row, new PackratReader(new CharSequenceReader(l))) match {
-      case Success(res, _)      => Right(res)
-      case NoSuccess(msg, next) => Left(s"$msg next: ${next.pos}")
-    }).foldRight[Either[String, List[Array[Complex]]]](Right(Nil)) {
-      case (Left(msg), _)          => Left(msg)
-      case (Right(_), Left(msg)) => Left(msg)
-      case (Right(row), Right(m))  => Right(row :: m)
-    } match {
-      case Left(msg) => Left(msg)
-      case Right(m) => Right(DenseMatrix(m: _*))
-    }
-
+  def parseMatrix(ss: List[String]): Either[String, Matrix[Complex[Real]]] =
+    ss.toVector.map(l =>
+      row.parse(l.trim).done match {
+        case ParseResult.Fail(input, stack, message) => s"Parsing failed. Input: $input, stack: $stack, message: $message".asLeft
+        case ParseResult.Partial(_) => s"Parsing not finished".asLeft
+        case ParseResult.Done(_, result) => result.asRight
+      }
+    ).sequence map Matrix.apply
 }
