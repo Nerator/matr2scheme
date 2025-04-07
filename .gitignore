@@ -30,3 +30,10 @@ bin/
 out
 
 /package
+
+.metals
+.vscode
+project/metals.sbt
+.bloop
+project/.bloop
+.bsp

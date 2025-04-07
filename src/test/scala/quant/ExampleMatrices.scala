@@ -127,8 +127,7 @@ object ExampleMatrices {
       Vector(1, 0, 0, 0),
       Vector(0, 0, 0, 1),
       Vector(0, 0, 1, 0)
-    ) map (a => Complex(a)),
-    {
+    ) map (a => Complex(a)), {
       val b = Real.sqrt1By2
       Matrix(
         Vector(Real.zero, b, Real.zero, -b),
@@ -136,8 +135,7 @@ object ExampleMatrices {
         Vector(Real.zero, b, Real.zero, b),
         Vector(Real.one, Real.zero, Real.zero, Real.zero)
       ) map (a => Complex(a))
-    },
-    {
+    }, {
       val b = Real.sqrt1By2
       Matrix(
         Vector(Real.zero, Real.zero, Real.zero, Real.one),
@@ -187,10 +185,30 @@ object ExampleMatrices {
       Vector(Complex(Real.cos(Real.cos(Real.pi * Real.sin(Real.two / 3)))))
     ),
     Matrix(
-      Vector((Real.zero, Real.zero), (Real.zero, Real.zero), (Real.zero, Real.zero), (Real.one, Real.zero)),
-      Vector((Real.zero, Real.zero), (Real.cos(Real.pi / 12), Real.zero), (Real.zero, -Real.sin(Real.pi / 12)), (Real.zero, Real.zero)),
-      Vector((Real.zero, Real.zero), (Real.zero, -Real.sin(Real.pi / 12)), (Real.cos(Real.pi / 12), Real.zero), (Real.zero, Real.zero)),
-      Vector((Real.one, Real.zero), (Real.zero, Real.zero), (Real.zero, Real.zero), (Real.zero, Real.zero))
+      Vector(
+        (Real.zero, Real.zero),
+        (Real.zero, Real.zero),
+        (Real.zero, Real.zero),
+        (Real.one, Real.zero)
+      ),
+      Vector(
+        (Real.zero, Real.zero),
+        (Real.cos(Real.pi / 12), Real.zero),
+        (Real.zero, -Real.sin(Real.pi / 12)),
+        (Real.zero, Real.zero)
+      ),
+      Vector(
+        (Real.zero, Real.zero),
+        (Real.zero, -Real.sin(Real.pi / 12)),
+        (Real.cos(Real.pi / 12), Real.zero),
+        (Real.zero, Real.zero)
+      ),
+      Vector(
+        (Real.one, Real.zero),
+        (Real.zero, Real.zero),
+        (Real.zero, Real.zero),
+        (Real.zero, Real.zero)
+      )
     ) map { case (r, i) => Complex(r, i) },
     Matrix(
       Vector(Real.zero, Real.zero, Real.zero, Real.one),

@@ -19,7 +19,12 @@ object Arbs {
     val abc = for {
       rows <- Gen.oneOf(1 to 100)
       cols <- Gen.oneOf(1 to 100)
-      l <- Gen.listOfN(rows, Gen.listOfN(cols, Arbitrary.arbitrary[A]).map(_.toVector)).map(_.toVector)
+      l <- Gen
+        .listOfN(
+          rows,
+          Gen.listOfN(cols, Arbitrary.arbitrary[A]).map(_.toVector)
+        )
+        .map(_.toVector)
     } yield l
     Arbitrary(abc map (vvt => Matrix.apply(vvt)))
   }

@@ -13,27 +13,21 @@ Ohmi (4.6 Universal Quantum Gates).
 
 ## Building
 
-For Scala 2.13.1:
+For Scala 3.6.4:
 ``` shell
-sbt ++2.13.1 packageVer
+sbt ++3.6.4 packageVer
 ```
 
-For Scala 2.12.11:
+For Scala 2.13.16:
 ``` shell
-sbt ++2.12.11 packageVer
-```
-
-For Scala 2.11.12:
-``` shell
-sbt ++2.11.12 packageVer
+sbt ++2.13.16 packageVer
 ```
 
 Resulting zip-files will be located at `package` folder.
 
 ## Usage
 
-Unzip archive with required Scala version to use. If you use Java 8 or later,
-use 2.13 or 2.12 version. Otherwise stick to 2.11.
+Unzip archive with required Scala version to use.
 
 Running (Linux):
 ``` shell
