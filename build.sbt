@@ -12,7 +12,10 @@ lazy val root = (project in file("."))
     tpolecatScalacOptions += ScalacOptions.source3,
     libraryDependencies ++= (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((3, _)) => Seq.empty
-      case _ => Seq("org.typelevel" % "kind-projector" % "0.13.3" cross CrossVersion.full)
+      case _ => Seq(
+        "org.typelevel" % "kind-projector" % "0.13.3" cross CrossVersion.full,
+        "com.olegpy" %% "better-monadic-for" % "0.3.1"
+      )
     })
   )
   .settings(
@@ -36,19 +39,6 @@ lazy val root = (project in file("."))
       "org.typelevel"          %% "cats-laws"                % catsCoreVersion % Test,
       "org.typelevel"          %% "spire-laws"               % spireVersion % Test,
     ),
-    Universal / mappings := {
-      val universalMappings = (Universal / mappings).value
-      val filtered = universalMappings filter {
-        case (_, fileName) =>
-          println(s"debug: filename = $fileName")
-
-          !fileName.endsWith(".jar") || fileName.contains("scala-library") ||
-            fileName.contains("atto") || fileName.contains("cats") ||
-            fileName.contains("spire_") || fileName.contains("algebra") ||
-            fileName.contains("matr2scheme")
-      }
-      filtered
-    },
     Compile / console / initialCommands := 
 """import quant.instances.all._
 """
